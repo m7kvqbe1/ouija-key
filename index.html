@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Sampler Project</title>
+	<title>Josh's Sampler Project</title>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	
 	<style type="text/css">
@@ -16,6 +16,10 @@
 			position: absolute;
 		}
 		
+		::-webkit-scrollbar { 
+			display: none; 
+		}
+		
 		#key {
 			margin: 0 auto;
 			width: 200px;
@@ -26,19 +30,43 @@
 			position: relative;
 			top: 50%;
 			transform: translateY(-46%);
-		}	
+		}
+		
+		#video-bg {
+			position: fixed; 
+			right: 0; 
+			bottom: 0;
+			min-width: 100%; 
+			min-height: 100%;
+			width: auto; 
+			height: auto; 
+			z-index: -100;
+			/*background: url(bg.jpg) no-repeat;
+			background-size: cover;*/
+		}
 	</style>
 </head>
 
 <body>
 	<span id="key"></span>
 	
-	<script type="text/javascript">		
+	<div id="video-grid"></div>
+	
+	<video autoplay loop id="video-bg">
+		<source src="video/bg.mp4" type="video/mp4">
+		<source src="video/bg.webm" type="video/webm">
+	</video>
+	
+	<audio id="audio-bg"></audio>
+	
+	<script type="text/javascript">	
 		var Sampler = {
 			// Constant background audio
-			backgroundAudioElement: document.createElement('audio'),
+			backgroundAudioElement: document.getElementById('audio-bg'),
 			
-			// Keys / sound file definitions
+			backgroundVideoElement: document.getElementById('video-bg'),
+			
+			// Keys / sound file dictionary
 			sounds: {
 				q: "S01.wav",
 				w: "S02.wav",
@@ -68,34 +96,34 @@
 				m: ".wav"   	
 			},
 			
-			// Keys / video file definitions
+			// Keys / video file dictionary
 			videos: {
-				q: "",
-				w: "",
-				e: "",
-				r: "",
-				t: "",
-				y: "",
-				u: "",
-				i: "",
-				o: "",
-				p: "",
-				a: "",
-				s: "",
-				d: "",
-				f: "",
-				g: "",
-				h: "",
-				j: "",
-				k: "",
-				l: "",
-				z: "",
-				x: "",
-				c: "",
-				v: "",
-				b: "",
-				n: "",
-				m: ""
+				q: ".mp4",
+				w: ".mp4",
+				e: ".mp4",
+				r: ".mp4",
+				t: ".mp4",
+				y: ".mp4",
+				u: ".mp4",
+				i: ".mp4",
+				o: ".mp4",
+				p: ".mp4",
+				a: ".mp4",
+				s: ".mp4",
+				d: ".mp4",
+				f: ".mp4",
+				g: ".mp4",
+				h: ".mp4",
+				j: ".mp4",
+				k: ".mp4",
+				l: ".mp4",
+				z: ".mp4",
+				x: ".mp4",
+				c: ".mp4",
+				v: ".mp4",
+				b: ".mp4",
+				n: ".mp4",
+				m: ".mp4"
 			},
 			
 			triggerAudio: function(e) {
@@ -107,8 +135,23 @@
 				audioElement.setAttribute('src', 'audio/' + this.sounds[String.fromCharCode(e.which)]);
 			},
 			
+			gridCount: 0,
+			
 			triggerVideo: function(e) {
+				// Choose the video from the key press
+				
+				// Add video element to next space in the grid (using gridCount)
+				
+				// Increment the grid count
+				
+				// When the video stops playing leave a transparent box until it is replaced (background video can be seen through this space)
+				
 				console.log('playing video');
+			},
+			
+			pauseVideo: function(e) {
+				backgroundVideoElement.pause();
+				console.log('video paused');
 			}
 		}
 				
