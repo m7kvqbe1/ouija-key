@@ -29,9 +29,12 @@
 			display: block;
 			position: relative;
 			top: 50%;
-			transform: translateY(-46%);
+			transform: translateY(-55%);
+			
+			z-index: 9999;
 		}
 		
+		#video-overlay,
 		#video-bg {
 			position: fixed; 
 			right: 0; 
@@ -44,6 +47,10 @@
 			/*background: url(bg.jpg) no-repeat;
 			background-size: cover;*/
 		}
+		
+		#video-overlay {
+			z-index: 9998;
+		}
 	</style>
 </head>
 
@@ -53,8 +60,11 @@
 	<div id="video-grid"></div>
 	
 	<video autoplay loop id="video-bg">
-		<source src="video/bg.mp4" type="video/mp4">
 		<source src="video/bg.webm" type="video/webm">
+	</video>
+	
+	<video autoplay loop id="video-overlay">
+		<source src="" type="video/webm">
 	</video>
 	
 	<audio id="audio-bg"></audio>
@@ -65,6 +75,8 @@
 			backgroundAudioElement: document.getElementById('audio-bg'),
 			
 			backgroundVideoElement: document.getElementById('video-bg'),
+			
+			backgroundVideoOverlayElement: document.getElementById('video-overlay'),
 			
 			// Keys / sound file dictionary
 			sounds: {
@@ -98,32 +110,32 @@
 			
 			// Keys / video file dictionary
 			videos: {
-				q: ".mp4",
-				w: ".mp4",
-				e: ".mp4",
-				r: ".mp4",
-				t: ".mp4",
-				y: ".mp4",
-				u: ".mp4",
-				i: ".mp4",
-				o: ".mp4",
-				p: ".mp4",
-				a: ".mp4",
-				s: ".mp4",
-				d: ".mp4",
-				f: ".mp4",
-				g: ".mp4",
-				h: ".mp4",
-				j: ".mp4",
-				k: ".mp4",
-				l: ".mp4",
-				z: ".mp4",
-				x: ".mp4",
-				c: ".mp4",
-				v: ".mp4",
-				b: ".mp4",
-				n: ".mp4",
-				m: ".mp4"
+				q: "Clip02.webm",
+				w: "Clip06.webm",
+				e: "Clip15.webm",
+				r: "Clip18.webm",
+				t: ".webm",
+				y: ".webm",
+				u: ".webm",
+				i: ".webm",
+				o: ".webm",
+				p: ".webm",
+				a: ".webm",
+				s: ".webm",
+				d: ".webm",
+				f: ".webm",
+				g: ".webm",
+				h: ".webm",
+				j: ".webm",
+				k: ".webm",
+				l: ".webm",
+				z: ".webm",
+				x: ".webm",
+				c: ".webm",
+				v: ".webm",
+				b: ".webm",
+				n: ".webm",
+				m: ".webm"
 			},
 			
 			triggerAudio: function(e) {
@@ -146,11 +158,12 @@
 				
 				// When the video stops playing leave a transparent box until it is replaced (background video can be seen through this space)
 				
+				this.backgroundVideoOverlayElement.setAttribute('src', 'video/' + this.videos[String.fromCharCode(e.which)]);
 				console.log('playing video');
 			},
 			
 			pauseVideo: function(e) {
-				backgroundVideoElement.pause();
+				this.backgroundVideoOverlayElement.pause();
 				console.log('video paused');
 			}
 		}
