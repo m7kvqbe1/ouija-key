@@ -1,25 +1,25 @@
 var Sampler = {
-	assetCount: 10,	
+	assetCount: 52,	
 	filesLoaded: 0,
 	
 	preloadComplete: false,
 	
 	loadCheck: function() {
-		this.filesLoaded++;
+		Sampler.filesLoaded++;
 		
-		if(this.filesLoaded >= this.assetCount) {
-			this.preloadComplete = true;
+		if(Sampler.filesLoaded >= Sampler.assetCount) {
+			Sampler.preloadComplete = true;
 			
 			// Hide loading screen
 			$('.loading').hide();
 			
-			console.log('asset preloading complete');
+			console.log('preloading complete');
 		}
 	},
 	
 	preloadAudio: function(uri) {
 		var audio = new Audio();
-		audio.addEventListener('canplaythrough', this.loadCheck, false);
+		audio.addEventListener('canplaythrough', Sampler.loadCheck, false);
 		audio.src = uri;
 			
 		return audio;
@@ -168,7 +168,7 @@ var Sampler = {
 	}
 }
 	
-// Once application has been loaded
+// Once the core application has been loaded
 $(document).ready( function() {
 	// Preload audio assets
 	for(var property in Sampler.sounds) {
