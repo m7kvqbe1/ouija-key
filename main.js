@@ -2,20 +2,24 @@ var Sampler = {
 	assetCount: 10,	
 	filesLoaded: 0,
 	
-	addLoaded: function() {
+	preloadComplete: false,
+	
+	loadCheck: function() {
 		this.filesLoaded++;
 		
-		if(this.fileLoaded >= this.assetCount) {
-			console.log('asset preloading complete');
+		if(this.filesLoaded >= this.assetCount) {
+			this.preloadComplete = true;
 			
 			// Hide loading screen
 			$('.loading').hide();
+			
+			console.log('asset preloading complete');
 		}
 	},
 	
 	preloadAudio: function(uri) {
 		var audio = new Audio();
-		audio.addEventListener('canplaythrough', this.isAppLoaded, false);
+		audio.addEventListener('canplaythrough', this.loadCheck, false);
 		audio.src = uri;
 			
 		return audio;
@@ -146,22 +150,14 @@ var Sampler = {
 	
 	triggerAudio: function(e) {
 		$("#key").text(String.fromCharCode(e.which)).show().delay(500).fadeOut(200);
-		var audioElement = document.createElement('audio');
-	
-		audioElement.setAttribute('autoplay', 'autoplay');
-	
-		audioElement.setAttribute('src', 'audio/' + this.sounds[String.fromCharCode(e.which)]);
+		
+		// Play preloaded JavaScript audio object
+		this.sounds[String.fromCharCode(e.which)].play();
+		
+		console.log('playing audio');
 	},
 	
-	triggerVideo: function(e) {
-		// Choose the video from the key press
-	
-		// Add video element to next space in the grid (using gridCount)
-	
-		// Increment the grid count
-	
-		// When the video stops playing leave a transparent box until it is replaced (background video can be seen through this space)
-	
+	triggerVideo: function(e) {	
 		this.backgroundVideoOverlayElement.setAttribute('src', 'video/' + this.videos[String.fromCharCode(e.which)]);
 		console.log('playing video');
 	},
@@ -174,19 +170,27 @@ var Sampler = {
 	
 // Once application has been loaded
 $(document).ready( function() {
-	// Preload all assets
+	// Preload audio assets
 	for(var property in Sampler.sounds) {
 		if(Sampler.hasOwnProperty('sounds')) {			
 			var fileName = Sampler.sounds[property];
-			Sampler.preloadAudio('audio/' + fileName);
+			Sampler.sounds[property] = Sampler.preloadAudio('audio/' + fileName);
 		}
 	}
 	
-	Sampler.backgroundAudioElement.setAttribute('autoplay', 'autoplay');
+	// Preload video assets
+	for(var property in Sampler.videos) {
+		if(Sampler.hasOwnProperty('videos')) {
+			//var fileName = Sampler.videos[property];
+			//Sampler.videos[property] = Sampler.preloadVideo('video/' + fileName);
+		}
+	}
 });
 
 // Define runtime code
-$(document).keypress( function(e) {
-	Sampler.triggerAudio(e);
-	Sampler.triggerVideo(e);
-});
+if(Sampler.loaded) {
+	$(document).keypress( function(e) {
+		Sampler.triggerAudio(e);
+		Sampler.triggerVideo(e);
+	});	
+}
