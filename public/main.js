@@ -1,5 +1,5 @@
 var Sampler = {
-	// Videos & audio sample source root directory
+	// Video & audio sample source root directory
 	assetRoot: '../public',
 	
 	// Constant background video	
@@ -142,7 +142,12 @@ var Sampler = {
 		source.type = 'video/webm';
 		
 		var video = document.createElement('video');
+		video.id = 'video-overlay';
+		video.setAttribute('autoplay', true);
+		video.setAttribute('loop', true);
+		
 		video.appendChild(source);
+		
 		video.addEventListener('canplaythrough', Sampler.loadCheck, false);
 		
 		return video;
@@ -168,8 +173,7 @@ var Sampler = {
 	triggerVideo: function(e) {			
 		// Inject preloaded video element into page and play
 		$('#video-wrapper').html(this.videos[String.fromCharCode(e.which)]);
-		$('#video-wrapper video').play();
-		
+				
 		console.log('playing video');
 	},
 	

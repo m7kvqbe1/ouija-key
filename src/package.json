@@ -2,9 +2,9 @@
   "name": "web-sampler",
   "version": "1.0.0",
   "description": "Multimedia Web Sampler",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "author": "Tom Humphris",
   "license": "ISC",
