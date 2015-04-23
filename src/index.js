@@ -1,6 +1,10 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
+// Define static assets directory
+app.use('/public', express.static(__dirname + '/../public'));
 
 server.listen(8080);
 
