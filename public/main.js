@@ -130,7 +130,6 @@ var Sampler = {
 		M: "52.webm",
 	},
 
-	
 	/* Preload Assets */
 	loadCheck: function(fileName) {
 		Sampler.assetsLoaded++;
@@ -177,9 +176,8 @@ var Sampler = {
 		return audio;
 	},
 	
-	
 	/* Video & Audio Actions */
-	triggerAudio: function(e) {
+	playAudio: function(e) {
 		if(!this.preloadComplete) return;
 				
 		// Create new audio element (allows for sustain imitation)
@@ -188,7 +186,7 @@ var Sampler = {
 		audioElement.setAttribute('src', this.sounds[String.fromCharCode(e.which)].src);
 	},
 	
-	triggerVideo: function(e) {			
+	playVideo: function(e) {			
 		if(!this.preloadComplete) return;
 		
 		// Inject preloaded video element into page and play
@@ -221,6 +219,6 @@ $(document).ready( function() {
 
 // Setup runtime event handlers
 $(document).keypress( function(e) {
-	Sampler.triggerAudio(e);
-	Sampler.triggerVideo(e);
+	Sampler.playAudio(e);
+	Sampler.playVideo(e);
 });

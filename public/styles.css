@@ -18,6 +18,8 @@ body {
 #debug {
 	z-index: 9999;
 	position: relative;
+	top: 10px;
+	left: 10px;
 	
 	display: none;
 }
