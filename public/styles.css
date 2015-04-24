@@ -24,7 +24,7 @@ body {
 	z-index: 100;
 	background: rgb(0,0,0);
 	background: transparent\9;
-	background: rgba(0,0,0,0.8);
+	background: rgba(0,0,0,0.9);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#cc000000,endColorstr=#cc000000);
 	zoom: 1;
 }
