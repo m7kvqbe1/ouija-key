@@ -4,7 +4,7 @@ var Sampler = {
 	
 	// Asset preload flags & count
 	assetCount: 52,	
-	filesLoaded: 0,
+	assetsLoaded: 0,
 	preloadComplete: false,
 	
 	// Constant background video
@@ -133,18 +133,16 @@ var Sampler = {
 	
 	/* Preload Assets */
 	loadCheck: function(fileName) {
-		Sampler.filesLoaded++;
+		Sampler.assetsLoaded++;
 		
-		Sampler.displayDebug('Loaded: ' + fileName);
+		Sampler.displayDebug('Loading: ' + fileName);
 		
-		if(Sampler.filesLoaded >= Sampler.assetCount) {
+		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
 			
 			console.log('preloading complete');
 			
-			$('.loading').hide();
-			
-			$('#debug').hide();
+			$('.loading, #debug').hide();
 		}
 	},
 	
@@ -208,7 +206,7 @@ $(document).ready( function() {
 	for(var property in Sampler.sounds) {
 		if(Sampler.hasOwnProperty('sounds')) {			
 			var fileName = Sampler.sounds[property];
-			Sampler.sounds[property] = Sampler.preloadAudio(Sampler.assetRoot + '/audio/' + fileName, Sampler.debugMessage);
+			Sampler.sounds[property] = Sampler.preloadAudio(Sampler.assetRoot + '/audio/' + fileName);
 		}
 	}
 	
