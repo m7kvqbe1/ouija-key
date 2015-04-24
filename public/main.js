@@ -2,18 +2,18 @@ var Sampler = {
 	// Video & audio sample source root directory
 	assetRoot: '../public',
 	
-	// Constant background video	
+	// Constant background video
 	backgroundVideoElement: document.getElementById('video-bg'),
 	
 	// Video sample overlay
 	backgroundVideoOverlayElement: document.getElementById('video-overlay'),
 	
 	// Preload
-	assetCount: 99,	
+	assetCount: 52,	
 	filesLoaded: 0,
 	preloadComplete: false,
 	
-	// Keys / sound file dictionary
+	// Key / sound source file dictionary
 	sounds: {
 		q: "S01.wav",
 		w: "S02.wav",
@@ -69,7 +69,7 @@ var Sampler = {
 		M: "S52.wav",
 	},
 	
-	// Keys / video file dictionary
+	// Key / video source file dictionary
 	videos: {
 		q: "01.webm",
 		w: "02.webm",
@@ -162,25 +162,33 @@ var Sampler = {
 	},
 	
 	triggerAudio: function(e) {
-		$("#key").text(String.fromCharCode(e.which)).show().delay(500).fadeOut(200);
+		if(!this.preloadComplete) return;
+				
+		// Create new audio element (allows for sustain imitation)
+		var audioElement = document.createElement('audio');
+		audioElement.setAttribute('autoplay', 'autoplay');
+		audioElement.setAttribute('src', this.sounds[String.fromCharCode(e.which)].src);
 		
-		// Play preloaded audio object
-		this.sounds[String.fromCharCode(e.which)].play();
-		
-		console.log('playing audio');
+		console.log('playing audio: ' + String.fromCharCode(e.which));
 	},
 	
 	triggerVideo: function(e) {			
+		if(!this.preloadComplete) return;
+		
 		// Inject preloaded video element into page and play
 		$('#video-wrapper').html(this.videos[String.fromCharCode(e.which)]);
 				
-		console.log('playing video');
+		console.log('playing video: ' + String.fromCharCode(e.which));
 	},
 	
 	pauseVideo: function(e) {
 		this.backgroundVideoOverlayElement.pause();
 		
 		console.log('video paused');
+	},
+	
+	displayKeypress: function(e) {
+		$("#key").text(String.fromCharCode(e.which)).show().delay(500).fadeOut(200);
 	}
 }
 	
@@ -198,7 +206,7 @@ $(document).ready( function() {
 	for(var property in Sampler.videos) {
 		if(Sampler.hasOwnProperty('videos')) {
 			var fileName = Sampler.videos[property];
-			Sampler.videos[property] = Sampler.preloadVideo(Sampler.assetRoot + '/video/' + fileName);
+			//Sampler.videos[property] = Sampler.preloadVideo(Sampler.assetRoot + '/video/' + fileName);
 		}
 	}
 });

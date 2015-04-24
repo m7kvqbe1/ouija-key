@@ -38,7 +38,7 @@
 	var socket = io.connect('http://tomhumphris.com:8080');
 	socket.on('message', function (data) {
 		console.log(data);
-		socket.emit('response', { my: 'data' });
+		socket.emit('phone-home', { my: 'data' });
 	});
 	</script>
 </body>
