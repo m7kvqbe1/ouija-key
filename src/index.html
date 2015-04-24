@@ -10,6 +10,10 @@
 <body>
 	<span id="debug"></span>
 	
+	<a id="nav-toggle" href="#">
+		<span></span>
+	</a>
+	
 	<div class="loading">
 		<div class="loading-outer">
 			<div class="loading-inner">
@@ -35,11 +39,19 @@
 	<script src="/public/main.js"></script>
 	
 	<script>
+	// Node.js WebSockets
 	var socket = io.connect('http://tomhumphris.com:8080');
 	socket.on('message', function (data) {
 		console.log(data);
 		socket.emit('phone-home', { my: 'data' });
 	});
+	</script>
+	
+	<script>
+	// User Interface
+	document.querySelector( "#nav-toggle" ).addEventListener( "click", function() {
+    	this.classList.toggle( "active" );
+  	});
 	</script>
 </body>
 </html>

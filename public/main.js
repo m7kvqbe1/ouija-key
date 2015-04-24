@@ -142,6 +142,7 @@ var Sampler = {
 			console.log('preloading complete');
 			
 			$('.loading, #debug').hide();
+			$('#nav-toggle').addClass('show');
 		}
 	},
 	
