@@ -1,5 +1,5 @@
 var Sampler = {
-	// Video & audio sample source root directory
+	// Video & audio sample root directory
 	assetRoot: '../public',
 	
 	// Asset preload flags & count
@@ -131,10 +131,10 @@ var Sampler = {
 	},
 
 	/* Preload Assets */
-	loadCheck: function(fileName) {
+	loadCheck: function(uri) {
 		Sampler.assetsLoaded++;
 		
-		Sampler.displayDebug('Loading: ' + fileName);
+		Sampler.displayDebug('Loading: ' + uri);
 		
 		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
@@ -197,7 +197,15 @@ var Sampler = {
 	pauseVideo: function(e) {
 		this.backgroundVideoOverlayElement.pause();
 	}
-}
+};
+
+var UserInterface = {
+	
+};
+
+var WebSockets = {
+	
+};
 	
 // Once the core application has been loaded
 $(document).ready( function() {
