@@ -2,16 +2,21 @@ var Sampler = {
 	// Video & audio sample source root directory
 	assetRoot: '../public',
 	
+	// Asset preload flags & count
+	assetCount: 52,	
+	filesLoaded: 0,
+	preloadComplete: false,
+	
 	// Constant background video
 	backgroundVideoElement: document.getElementById('video-bg'),
 	
 	// Video sample overlay
 	backgroundVideoOverlayElement: document.getElementById('video-overlay'),
 	
-	// Preload
-	assetCount: 52,	
-	filesLoaded: 0,
-	preloadComplete: false,
+	// Print debug to screen
+	displayDebug: function(message) {
+		$('#debug').text(message).show();
+	},
 	
 	// Key / sound source file dictionary
 	sounds: {
@@ -124,15 +129,22 @@ var Sampler = {
 		N: "51.webm",
 		M: "52.webm",
 	},
+
 	
-	loadCheck: function() {
+	/* Preload Assets */
+	loadCheck: function(fileName) {
 		Sampler.filesLoaded++;
+		
+		Sampler.displayDebug('Loaded: ' + fileName);
 		
 		if(Sampler.filesLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
-			$('.loading').hide();
 			
 			console.log('preloading complete');
+			
+			$('.loading').hide();
+			
+			$('#debug').hide();
 		}
 	},
 	
@@ -148,19 +160,27 @@ var Sampler = {
 		
 		video.appendChild(source);
 		
-		video.addEventListener('canplaythrough', Sampler.loadCheck, false);
+		video.addEventListener('canplaythrough', function() {
+			Sampler.loadCheck(uri);
+		}, false);
 		
 		return video;
 	},
 	
 	preloadAudio: function(uri) {
 		var audio = new Audio();
-		audio.addEventListener('canplaythrough', Sampler.loadCheck, false);
+		
+		audio.addEventListener('canplaythrough', function() {
+			Sampler.loadCheck(uri);
+		}, false);
+		
 		audio.src = uri;
-			
+		
 		return audio;
 	},
 	
+	
+	/* Video & Audio Actions */
 	triggerAudio: function(e) {
 		if(!this.preloadComplete) return;
 				
@@ -168,8 +188,6 @@ var Sampler = {
 		var audioElement = document.createElement('audio');
 		audioElement.setAttribute('autoplay', 'autoplay');
 		audioElement.setAttribute('src', this.sounds[String.fromCharCode(e.which)].src);
-		
-		console.log('playing audio: ' + String.fromCharCode(e.which));
 	},
 	
 	triggerVideo: function(e) {			
@@ -177,18 +195,10 @@ var Sampler = {
 		
 		// Inject preloaded video element into page and play
 		$('#video-wrapper').html(this.videos[String.fromCharCode(e.which)]);
-				
-		console.log('playing video: ' + String.fromCharCode(e.which));
 	},
 	
 	pauseVideo: function(e) {
 		this.backgroundVideoOverlayElement.pause();
-		
-		console.log('video paused');
-	},
-	
-	displayKeypress: function(e) {
-		$("#key").text(String.fromCharCode(e.which)).show().delay(500).fadeOut(200);
 	}
 }
 	
@@ -198,7 +208,7 @@ $(document).ready( function() {
 	for(var property in Sampler.sounds) {
 		if(Sampler.hasOwnProperty('sounds')) {			
 			var fileName = Sampler.sounds[property];
-			Sampler.sounds[property] = Sampler.preloadAudio(Sampler.assetRoot + '/audio/' + fileName);
+			Sampler.sounds[property] = Sampler.preloadAudio(Sampler.assetRoot + '/audio/' + fileName, Sampler.debugMessage);
 		}
 	}
 	
