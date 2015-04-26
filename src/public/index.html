@@ -60,14 +60,5 @@
 	<script src="/public/js/vendor.compiled.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/public/js/app.compiled.js"></script>
-	
-	<script>
-	// Node.js WebSockets
-	var socket = io.connect('http://tomhumphris.com:8080');
-	socket.on('message', function (data) {
-		console.log(data);
-		socket.emit('phone-home', { my: 'data' });
-	});
-	</script>
 </body>
 </html>

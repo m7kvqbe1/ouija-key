@@ -1,9 +1,7 @@
 $(document).ready(function() {
-	// Initialize sampler
+	WebSockets.init('http://tomhumphris.com:8080');
+	
 	Sampler.init('/public');
 	
-	// User Interface
-	document.querySelector('#nav-toggle').addEventListener('click', function() {
-		this.classList.toggle('active');
-	});
+	Interface.init();
 });
