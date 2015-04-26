@@ -179,7 +179,7 @@ var Sampler = {
 	playAudio: function(e) {
 		if(!this.preloadComplete) return;
 				
-		// Create new audio element (allows for sustain imitation)
+		// Create new audio element (allows for MPC note-repeat emulation)
 		var audioElement = document.createElement('audio');
 		$(audioElement).attr('autoplay', 'autoplay');
 		$(audioElement).attr('src', this.sounds[String.fromCharCode(e.which)].src);
