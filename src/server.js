@@ -9,7 +9,7 @@ app.use('/public', express.static(__dirname + '/public'));
 server.listen(8080);
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/application/index.html');
+	res.sendFile(__dirname + '/public/index.html');
 });
 
 io.on('connection', function (socket) {

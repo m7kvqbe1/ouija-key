@@ -139,7 +139,7 @@ var Sampler = {
 		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
 			
-			console.log('preloading complete');
+			console.log('preload complete');
 			
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');

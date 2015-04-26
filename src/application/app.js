@@ -16,7 +16,13 @@ $(document).ready(function() {
 	}
 });
 
+// Keyboard
 document.addEventListener('keypress', function(e) {
 	setTimeout(Sampler.playAudio(e), 300);
 	setTimeout(Sampler.playVideo(e), 300);
+});
+
+// User Interface
+document.querySelector('#nav-toggle').addEventListener('click', function() {
+	this.classList.toggle('active');
 });
