@@ -1,13 +1,6 @@
 body {
 	background: #000;
-	color: #fff;
-
-	height: 100%;
-	min-height: 100%;
-	width: 100%;
-	min-width: 100%;
-	position: absolute;
-	
+	color: #fff;	
 	font-family: 'Open Sans', sans-serif;
 }
 
@@ -66,8 +59,8 @@ body {
 
 #nav-toggle { 
 	position: absolute; 
-	top: 10px; 
-	left: 10px;
+	top: 20px; 
+	left: 20px;
 	cursor: pointer; 
 	padding: 10px 35px 16px 0px;
 	z-index: 9999;
