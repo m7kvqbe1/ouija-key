@@ -15,14 +15,16 @@ body {
 	display: none;
 }
 
+.hidden {
+	display: none;
+}
+
 #debug {
 	z-index: 9999;
 	position: relative;
 	top: 10px;
 	left: 10px;
 	opacity: 0.8;
-	
-	display: none;
 }
 
 .loading {

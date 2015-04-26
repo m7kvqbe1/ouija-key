@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Language" content="en">
-    <meta http-equiv="cleartype" content="on">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Language" content="en">
+	<meta http-equiv="cleartype" content="on">
     
-    <title>Ouija</title>
-    <meta name="description" content="">
+	<title>Ouija</title>
+	<meta name="description" content="">
     
-    <!--
-	    
+	<!--
+		    
 	▄██████▄  ███    █▄   ▄█       ▄█    ▄████████ 
 	███    ███ ███    ███ ███      ███   ███    ███ 
 	███    ███ ███    ███ ███▌     ███   ███    ███ 
@@ -22,18 +22,18 @@
 	                           ▀▀▀▀▀▀              
 	-->
     
-    <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
+	<link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
 	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="/public/styles.css" />
+	<link rel="stylesheet" href="/public/css/styles.css" />
 	
 	<!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 </head>
 
 <body>
-	<span id="debug"></span>
+	<span id="debug" class="hidden"></span>
 	
 	<a id="nav-toggle" href="#">
 		<span></span>
@@ -59,7 +59,7 @@
 		</video>
 	</div>
 	
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="/public/vendor/sprint.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/public/app.js"></script>
 	

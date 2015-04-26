@@ -4,7 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 // Define static assets directory
-app.use('/public', express.static(__dirname + '/../public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 server.listen(8080);
 

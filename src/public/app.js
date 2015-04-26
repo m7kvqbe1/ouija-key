@@ -2,20 +2,20 @@ var Sampler = {
 	// Video & audio sample root directory
 	assetRoot: '../public',
 	
-	// Asset preload flags & count
+	// Asset preload count & flags
 	assetCount: 52,	
 	assetsLoaded: 0,
 	preloadComplete: false,
 	
 	// Constant background video
-	backgroundVideoElement: document.getElementById('video-bg'),
+	backgroundVideoElement: $('video-bg'),
 	
 	// Video sample overlay
-	backgroundVideoOverlayElement: document.getElementById('video-overlay'),
+	backgroundVideoOverlayElement: $('video-overlay'),
 	
 	// Print debug to screen
 	displayDebug: function(message) {
-		$('#debug').text(message).show();
+		$('#debug').text(message).removeClass('hidden');
 	},
 	
 	// Key / sound source file dictionary
@@ -141,7 +141,7 @@ var Sampler = {
 			
 			console.log('preloading complete');
 			
-			$('.loading, #debug').hide();
+			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 		}
 	},
@@ -207,8 +207,7 @@ var WebSockets = {
 	
 };
 	
-// Once the core application has been loaded
-$(document).ready( function() {
+$(document).ready(function() {
 	// Preload audio assets
 	for(var property in Sampler.sounds) {
 		if(Sampler.hasOwnProperty('sounds')) {			
@@ -226,8 +225,7 @@ $(document).ready( function() {
 	}
 });
 
-// Setup runtime event handlers
-$(document).keypress( function(e) {
+document.addEventListener('keypress', function(e) {
 	Sampler.playAudio(e);
 	Sampler.playVideo(e);
 });
