@@ -3,15 +3,15 @@ var Sampler = {
 	assetRoot: '../public',
 	
 	// Asset preload count & flags
-	assetCount: 52,	
+	assetCount: 99,	
 	assetsLoaded: 0,
 	preloadComplete: false,
 	
 	// Constant background video
-	backgroundVideoElement: $('video-bg'),
+	backgroundVideoElement: $('#video-bg'),
 	
 	// Video sample overlay
-	backgroundVideoOverlayElement: $('video-overlay'),
+	backgroundVideoOverlayElement: $('#video-overlay'),
 	
 	// Print debug to screen
 	displayDebug: function(message) {
@@ -152,9 +152,7 @@ var Sampler = {
 		source.type = 'video/webm';
 		
 		var video = document.createElement('video');
-		video.id = 'video-overlay';
-		video.setAttribute('autoplay', true);
-		video.setAttribute('loop', true);
+		$(video).attr('id', 'video-overlay');
 		
 		video.appendChild(source);
 		
@@ -183,15 +181,17 @@ var Sampler = {
 				
 		// Create new audio element (allows for sustain imitation)
 		var audioElement = document.createElement('audio');
-		audioElement.setAttribute('autoplay', 'autoplay');
-		audioElement.setAttribute('src', this.sounds[String.fromCharCode(e.which)].src);
+		$(audioElement).attr('autoplay', 'autoplay');
+		$(audioElement).attr('src', this.sounds[String.fromCharCode(e.which)].src);
 	},
 	
 	playVideo: function(e) {			
 		if(!this.preloadComplete) return;
 		
-		// Inject preloaded video element into page and play
-		$('#video-wrapper').html(this.videos[String.fromCharCode(e.which)]);
+		// Add preloaded video element to DOM (autoplay and loop)
+		$('#video-wrapper').html(this.videos[String.fromCharCode(e.which)].outerHTML);
+		$('#video-wrapper video').attr('autoplay', 'autoplay');
+		$('#video-wrapper video').attr('loop', 'loop');
 	},
 	
 	pauseVideo: function(e) {
@@ -220,7 +220,7 @@ $(document).ready(function() {
 	for(var property in Sampler.videos) {
 		if(Sampler.hasOwnProperty('videos')) {
 			var fileName = Sampler.videos[property];
-			//Sampler.videos[property] = Sampler.preloadVideo(Sampler.assetRoot + '/video/' + fileName);
+			Sampler.videos[property] = Sampler.preloadVideo(Sampler.assetRoot + '/video/' + fileName);
 		}
 	}
 });
