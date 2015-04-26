@@ -1,6 +1,6 @@
 var Sampler = {
 	// Video & audio sample root directory
-	assetRoot: '/public',
+	assetRoot: null,
 	
 	// Asset preload count & flags
 	assetCount: 99,	
@@ -130,7 +130,6 @@ var Sampler = {
 		M: "52.webm",
 	},
 
-	/* Asset Preloading */
 	loadCheck: function(uri) {
 		Sampler.assetsLoaded++;
 		
@@ -139,7 +138,7 @@ var Sampler = {
 		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
 			
-			console.log('preload complete');
+			console.log('Preload complete');
 			
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
@@ -175,7 +174,6 @@ var Sampler = {
 		return audio;
 	},
 	
-	/* Video & Audio Actions */
 	playAudio: function(e) {
 		if(!this.preloadComplete) return;
 				
@@ -196,5 +194,36 @@ var Sampler = {
 	
 	pauseVideo: function(e) {
 		this.backgroundVideoOverlayElement.pause();
+	},
+	
+	init: function(assetRoot) {
+		if(assetRoot !== undefined) {
+			this.assetRoot = assetRoot;
+		} else {
+			console.warn('Asset document root undefined');
+			return;
+		}
+		
+		// Preload audio assets
+		for(var property in this.sounds) {
+			if(this.hasOwnProperty('sounds')) {			
+				var fileName = this.sounds[property];
+				this.sounds[property] = this.preloadAudio(this.assetRoot + '/audio/' + fileName);
+			}
+		}
+		
+		// Preload video assets
+		for(var property in this.videos) {
+			if(this.hasOwnProperty('videos')) {
+				var fileName = this.videos[property];
+				this.videos[property] = this.preloadVideo(this.assetRoot + '/video/' + fileName);
+			}
+		}
+		
+		// Keyboard
+		document.addEventListener('keypress', function(e) {
+			setTimeout(Sampler.playAudio(e), 300);
+			setTimeout(Sampler.playVideo(e), 300);
+		});
 	}
 };
