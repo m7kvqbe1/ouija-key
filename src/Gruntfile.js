@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
 			lib: {
 				src: [
-					'./application/lib/*.js'
+					'./application/vendor/*/*.js'
 				],
 				
 				dest: './public/js/vendor.compiled.js'
