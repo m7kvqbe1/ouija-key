@@ -13,11 +13,6 @@ var Sampler = {
 	// Video sample overlay
 	backgroundVideoOverlayElement: $('#video-overlay'),
 	
-	// Print debug to screen
-	displayDebug: function(message) {
-		$('#debug').text(message).removeClass('hidden');
-	},
-	
 	// Key / sound source file dictionary
 	sounds: {
 		q: "S01.wav",
@@ -133,7 +128,7 @@ var Sampler = {
 	loadCheck: function(uri) {
 		Sampler.assetsLoaded++;
 		
-		Sampler.displayDebug('Loading: ' + uri);
+		Interface.displayDebug('Loading: ' + uri);
 		
 		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
