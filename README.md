@@ -1,2 +1,2 @@
 # sampler
-Audio Visual Web Sampler
+Ouija Audio Visual Web Sampler
