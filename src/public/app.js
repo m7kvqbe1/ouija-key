@@ -1,6 +1,6 @@
 var Sampler = {
 	// Video & audio sample root directory
-	assetRoot: '../public',
+	assetRoot: '/public',
 	
 	// Asset preload count & flags
 	assetCount: 99,	
