@@ -15,6 +15,7 @@ module.exports = function(grunt) {
 
 			app: {
 				src: [
+					'./application/*.js',
 					'./application/app.js'
 				],
 
