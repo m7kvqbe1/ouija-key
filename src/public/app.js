@@ -226,6 +226,6 @@ $(document).ready(function() {
 });
 
 document.addEventListener('keypress', function(e) {
-	Sampler.playAudio(e);
-	Sampler.playVideo(e);
+	setTimeout(Sampler.playAudio(e), 300);
+	setTimeout(Sampler.playVideo(e), 300);
 });
