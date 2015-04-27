@@ -6,7 +6,7 @@ var WebSockets = {
 	broadcast: function(eventType, data) {
 		switch(eventType) {
 			case 'keypress':
-				this.socket.emit('response', { 'keypress': data });
+				this.socket.emit('response', { keypress: data });
 				break;
 			
 			default:
@@ -18,7 +18,7 @@ var WebSockets = {
 		if(src !== undefined) {
 			this.src = src;
 		} else {
-			console.warn('No URI provided for WebSocket server');
+			console.warn('No hostname provided for WebSocket server');
 		}
 		
 		this.socket = io.connect(this.src);

@@ -1,19 +1,10 @@
 var Sampler = {
-	// Video & audio sample root directory
 	assetRoot: null,
 	
-	// Asset preload count & flags
 	assetCount: 99,	
 	assetsLoaded: 0,
 	preloadComplete: false,
 	
-	// Constant background video
-	backgroundVideoElement: $('#video-bg'),
-	
-	// Video sample overlay
-	backgroundVideoOverlayElement: $('#video-overlay'),
-	
-	// Key / sound source file dictionary
 	sounds: {
 		q: "S01.wav",
 		w: "S02.wav",
@@ -69,7 +60,6 @@ var Sampler = {
 		M: "S52.wav",
 	},
 	
-	// Key / video source file dictionary
 	videos: {
 		q: "01.webm",
 		w: "02.webm",
@@ -124,6 +114,10 @@ var Sampler = {
 		N: "51.webm",
 		M: "52.webm",
 	},
+	
+	backgroundVideoElement: $('#video-bg'),
+	
+	backgroundVideoOverlayElement: $('#video-overlay'),
 
 	loadCheck: function(uri) {
 		Sampler.assetsLoaded++;
@@ -138,6 +132,18 @@ var Sampler = {
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 		}
+	},
+	
+	preloadAudio: function(uri) {
+		var audio = new Audio();
+		
+		audio.addEventListener('canplaythrough', function() {
+			Sampler.loadCheck(uri);
+		}, false);
+		
+		audio.src = uri;
+		
+		return audio;
 	},
 	
 	preloadVideo: function(uri) {
@@ -155,18 +161,6 @@ var Sampler = {
 		}, false);
 		
 		return video;
-	},
-	
-	preloadAudio: function(uri) {
-		var audio = new Audio();
-		
-		audio.addEventListener('canplaythrough', function() {
-			Sampler.loadCheck(uri);
-		}, false);
-		
-		audio.src = uri;
-		
-		return audio;
 	},
 	
 	playAudio: function(key) {
@@ -216,11 +210,13 @@ var Sampler = {
 		}
 		
 		// Keyboard
-		document.addEventListener('keypress', function(e) {			
-			setTimeout(Sampler.playAudio(String.fromCharCode(e.which)), 300);
-			setTimeout(Sampler.playVideo(String.fromCharCode(e.which)), 300);
+		document.addEventListener('keypress', function(e) {	
+			var key = String.fromCharCode(e.which);
 			
-			WebSockets.broadcast('keypress', String.fromCharCode(e.which));
+			WebSockets.broadcast('keypress', key);
+					
+			setTimeout(Sampler.playAudio(key), 300);
+			setTimeout(Sampler.playVideo(key), 300);
 		});
 	}
 };
