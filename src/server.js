@@ -13,8 +13,10 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-	socket.emit('message', { hello: 'world' });
-	socket.on('response', function (data) {
+	console.log('client connected');
+	
+	socket.on('response', function (data) {	
+		socket.broadcast.emit('keypress', { key: data.keypress });
 		console.log(data);
 	});
 });

@@ -1,19 +1,33 @@
 var WebSockets = {
 	socket: null,
 	
-	serverUri: null,
+	src: null,
 	
-	init: function(serverUri) {
-		if(serverUri !== undefined) {
-			this.socketLocation = serverUri;
+	broadcast: function(eventType, data) {
+		switch(eventType) {
+			case 'keypress':
+				this.socket.emit('response', { 'keypress': data });
+				break;
+			
+			default:
+				return;
+		}		
+	},
+	
+	init: function(src) {
+		if(src !== undefined) {
+			this.src = src;
 		} else {
 			console.warn('No URI provided for WebSocket server');
 		}
 		
-		this.socket = io.connect(this.serverUri);
-		this.socket.on('message', function (data) {
-			console.log(data);
-			this.socket.emit('phone-home', { my: 'data' });
-		});	
+		this.socket = io.connect(this.src);
+		
+		this.socket.on('keypress', function (data) {
+			setTimeout(Sampler.playAudio(data.key), 300);
+			setTimeout(Sampler.playVideo(data.key), 300);
+
+			console.log(data.key);			
+		});
 	}
 };

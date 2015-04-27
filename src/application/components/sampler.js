@@ -169,20 +169,20 @@ var Sampler = {
 		return audio;
 	},
 	
-	playAudio: function(e) {
+	playAudio: function(key) {
 		if(!this.preloadComplete) return;
 				
 		// Create new audio element (allows for MPC note-repeat emulation)
 		var audioElement = document.createElement('audio');
 		$(audioElement).attr('autoplay', 'autoplay');
-		$(audioElement).attr('src', this.sounds[String.fromCharCode(e.which)].src);
+		$(audioElement).attr('src', this.sounds[key].src);
 	},
 	
-	playVideo: function(e) {			
+	playVideo: function(key) {			
 		if(!this.preloadComplete) return;
 		
 		// Add preloaded video element to DOM (autoplay and loop)
-		$('#video-wrapper').html(this.videos[String.fromCharCode(e.which)].outerHTML);
+		$('#video-wrapper').html(this.videos[key].outerHTML);
 		$('#video-wrapper video').attr('autoplay', 'autoplay');
 		$('#video-wrapper video').attr('loop', 'loop');
 	},
@@ -216,9 +216,11 @@ var Sampler = {
 		}
 		
 		// Keyboard
-		document.addEventListener('keypress', function(e) {
-			setTimeout(Sampler.playAudio(e), 300);
-			setTimeout(Sampler.playVideo(e), 300);
+		document.addEventListener('keypress', function(e) {			
+			setTimeout(Sampler.playAudio(String.fromCharCode(e.which)), 300);
+			setTimeout(Sampler.playVideo(String.fromCharCode(e.which)), 300);
+			
+			WebSockets.broadcast('keypress', String.fromCharCode(e.which));
 		});
 	}
 };
