@@ -1,29 +1,22 @@
 var WebSockets = {
 	socket: null,
 	
-	src: null,
+	host: null,
 	
-	broadcast: function(eventType, data) {
-		switch(eventType) {
-			case 'keypress':
-				this.socket.emit('response', { keypress: data });
-				break;
-			
-			default:
-				return;
-		}		
+	broadcast: function(eventType, payload) {
+		this.socket.emit(eventType, JSON.stringify(payload));
 	},
 	
-	init: function(src) {
-		if(src !== undefined) {
-			this.src = src;
+	init: function(uri) {
+		if(uri !== undefined) {
+			this.host = uri;
 		} else {
-			console.warn('No hostname provided for WebSocket server');
+			console.warn('No URI provided for server');
 		}
 		
-		this.socket = io.connect(this.src);
+		this.socket = io.connect(this.host);
 		
-		this.socket.on('keypress', function (data) {
+		this.socket.on('trigger', function (data) {
 			setTimeout(Sampler.playAudio(data.key), 300);
 			setTimeout(Sampler.playVideo(data.key), 300);
 

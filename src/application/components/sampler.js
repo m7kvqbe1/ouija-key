@@ -189,7 +189,7 @@ var Sampler = {
 		if(assetRoot !== undefined) {
 			this.assetRoot = assetRoot;
 		} else {
-			console.warn('Asset document root undefined');
+			console.warn('Audio and video asset source undefined');
 			return;
 		}
 		
@@ -209,14 +209,14 @@ var Sampler = {
 			}
 		}
 		
-		// Keyboard
+		// Bind keypress event listener
 		document.addEventListener('keypress', function(e) {	
-			var key = String.fromCharCode(e.which);
-			
-			WebSockets.broadcast('keypress', key);
+			var trigger = { key: String.fromCharCode(e.which) };
+						
+			WebSockets.broadcast('trigger', trigger.key);
 					
-			setTimeout(Sampler.playAudio(key), 300);
-			setTimeout(Sampler.playVideo(key), 300);
+			setTimeout(Sampler.playAudio(trigger.key), 300);
+			setTimeout(Sampler.playVideo(trigger.key), 300);
 		});
 	}
 };
