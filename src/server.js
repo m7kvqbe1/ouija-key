@@ -18,12 +18,12 @@ io.on('connection', function(socket) {
 	console.log('client connected');
 	
 	socket.on('trigger', function(data) {	
-		socket.broadcast.emit('trigger', JSON.stringify(data));
+		socket.broadcast.emit('trigger', data);
 		console.log(data);
 	});
 	
 	socket.on('chat', function(data) {
-		socket.broadcast.emit('chat', JSON.stringify(data));
+		socket.emit('chat', data);
 		console.log(data);
 	});
 });

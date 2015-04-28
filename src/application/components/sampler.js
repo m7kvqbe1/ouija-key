@@ -186,6 +186,8 @@ var Sampler = {
 	},
 	
 	init: function(assetRoot) {
+		_this = this;
+		
 		if(assetRoot !== undefined) {
 			this.assetRoot = assetRoot;
 		} else {
@@ -210,8 +212,10 @@ var Sampler = {
 		}
 		
 		// Bind keypress event listener
-		document.addEventListener('keypress', function(e) {	
+		document.addEventListener('keypress', function(e) {
 			var trigger = { key: String.fromCharCode(e.which) };
+			
+			if(Interface.chatActive || !_this.sounds.hasOwnProperty(trigger)) return;
 						
 			WebSockets.broadcast('trigger', trigger.key);
 					

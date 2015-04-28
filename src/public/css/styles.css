@@ -132,4 +132,39 @@ body {
 
 #video-overlay {
 	z-index: 9998;
+	width: 100%;
+}
+
+.chat-input {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	width: 100%;
+	
+	z-index: 9999;
+}
+
+.chat-input input[type="text"] {
+	width: 97%;
+	background-color: transparent;
+	border: none;
+	font-size: 3em;
+	color: #fff;
+	outline: none;
+	opacity: 0.8;
+}
+
+.chat-messages {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	text-align: right;
+	
+	z-index: 9999;
+	opacity: 0.8;
+}
+
+.chat-messages span.message {
+	display: block;
+	margin-bottom: 10px;
 }
