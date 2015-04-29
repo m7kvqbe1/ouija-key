@@ -130,7 +130,7 @@ var Sampler = {
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 			
-			Interface.toggleMenu();
+			Interface.toggleMenuDisplay();
 		}
 	},
 	
