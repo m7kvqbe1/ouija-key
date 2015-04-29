@@ -2,6 +2,7 @@ body {
 	background: #000;
 	color: #fff;	
 	font-family: 'Open Sans', sans-serif;
+	font-size: 0.9em;
 }
 
 ::-webkit-scrollbar {
@@ -27,6 +28,7 @@ body {
 	opacity: 0.8;
 }
 
+.menu,
 .loading {
 	position: fixed;
 	top: 0;
@@ -63,7 +65,7 @@ body {
 	left: 20px;
 	cursor: pointer; 
 	padding: 10px 35px 16px 0px;
-	z-index: 9999;
+	z-index: 10000;
 	
 	opacity: 0;
 	transition: visibility 0s linear 0.5s,opacity 0.5s linear;
@@ -72,6 +74,10 @@ body {
 #nav-toggle.show {
 	opacity: 0.8;
 	transition-delay: 0s;
+}
+
+#nav-toggle.active {
+	opacity: 1;
 }
 
 #nav-toggle span, 
@@ -100,6 +106,7 @@ body {
 #nav-toggle span:after {
 	transition: all 500ms ease-in-out;
 }
+
 #nav-toggle.active span {
 	background-color: transparent;
 }
@@ -116,6 +123,37 @@ body {
 #nav-toggle.active span:after {
 	transform: translateY(-10px) rotate(-45deg);
 	top: 10px;
+}
+
+.menu {
+	z-index: 9999;
+}
+
+.menu ul {
+	list-style-type: none;
+	margin: 40px;
+}
+
+.menu li {
+	margin-bottom: 20px;
+}
+
+.menu a {
+	font-size: 5em;
+	text-decoration: none;
+	color: #fff;
+}
+
+.menu a:hover {
+	color: #c9c9c9;
+}
+
+.version {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	text-align: right;
+	z-index: 10000;
 }
 
 #video-overlay,

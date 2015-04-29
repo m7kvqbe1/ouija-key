@@ -127,10 +127,10 @@ var Sampler = {
 		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;
 			
-			console.log('Preload complete');
-			
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
+			
+			Interface.toggleMenu();
 		}
 	},
 	
