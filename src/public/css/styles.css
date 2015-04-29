@@ -20,6 +20,10 @@ body {
 	display: none;
 }
 
+.disabled {
+	opacity: 0.2;
+}
+
 #debug {
 	z-index: 9999;
 	position: relative;

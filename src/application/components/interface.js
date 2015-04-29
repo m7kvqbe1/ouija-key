@@ -40,6 +40,7 @@ var Interface = {
 	
 	toggleChat: function() {
 		document.querySelector('.chat-messages').classList.toggle('hidden');
+		document.querySelector('#menu-toggle-chat').classList.toggle('disabled');
 		
 		this.chatEnabled = (this.chatEnabled) ? false : true;
 		
@@ -88,7 +89,7 @@ var Interface = {
 		});
 		
 		// Bind toggle chat event listener
-		document.querySelector('#toggleChat').addEventListener('click', function() {
+		document.querySelector('#menu-toggle-chat').addEventListener('click', function() {
 			_this.toggleChat();
 		});
 	}
