@@ -122,7 +122,7 @@ var Sampler = {
 	loadCheck: function(uri) {
 		Sampler.assetsLoaded++;
 		
-		Interface.displayDebug('Loading: ' + uri);
+		Interface.printDebug('Loading: ' + uri);
 		
 		if(Sampler.assetsLoaded >= Sampler.assetCount) {
 			Sampler.preloadComplete = true;

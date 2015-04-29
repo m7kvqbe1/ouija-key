@@ -4,7 +4,7 @@ var Interface = {
 	
 	menuActive: false,
 	
-	displayDebug: function(message) {
+	printDebug: function(message) {
 		$('#debug').text(message).removeClass('hidden');
 	},
 	
@@ -32,20 +32,20 @@ var Interface = {
 		this.chatActive = (this.chatActive) ? false : true;
 	},
 	
-	printChatMessage: function(message) {
-		if(message !== undefined) {
-			$('.chat-messages').prepend('<span class="message">' + message + '</span>');	
-		}
-	},
-	
 	toggleChat: function() {
 		document.querySelector('.chat-messages').classList.toggle('hidden');
 		document.querySelector('#menu-toggle-chat').classList.toggle('disabled');
 		
-		this.chatEnabled = (this.chatEnabled) ? false : true;
-		
-		var text = (this.chatEnabled) ? 'Enabled' : 'Disabled';
+		var text = (this.chatEnabled) ? 'Disabled' : 'Enabled';
 		$('.chat-toggle-text').html(text);
+		
+		this.chatEnabled = (this.chatEnabled) ? false : true;
+	},
+	
+	printChatMessage: function(message) {
+		if(message !== undefined) {
+			$('.chat-messages').prepend('<span class="message">' + message + '</span>');	
+		}
 	},
 	
 	init: function() {
