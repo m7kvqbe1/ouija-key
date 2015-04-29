@@ -12,6 +12,7 @@ var WebSockets = {
 			this.host = uri;
 		} else {
 			console.warn('No URI provided for server');
+			return;
 		}
 		
 		// Create socket
