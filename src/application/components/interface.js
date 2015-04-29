@@ -31,12 +31,12 @@ var Interface = {
 		document.addEventListener('keyup', function(e) {
 			switch(e.keyCode) {
 				case 13:
-					if(_this.chatActive) {
-						var payload = {
-							message: $('.chat-input input').val()
-						}
+					if(_this.chatActive) {						
+						var message = $('.chat-input input').val();
 						
-						WebSockets.broadcast('chat', payload);
+						WebSockets.broadcast('chat', { message: message });
+						
+						_this.printChatMessage(message);
 						
 						_this.toggleChat();
 					} else {

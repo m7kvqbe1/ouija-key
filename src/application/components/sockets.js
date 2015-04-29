@@ -19,10 +19,10 @@ var WebSockets = {
 		
 		// Trigger samples from socket event
 		this.socket.on('trigger', function(data) {
-			setTimeout(Sampler.playAudio(data.key), 300);
-			setTimeout(Sampler.playVideo(data.key), 300);
-
-			console.log(data.key);			
+			var obj = JSON.parse(data);
+			
+			setTimeout(Sampler.playAudio(obj.key), 300);
+			setTimeout(Sampler.playVideo(obj.key), 300);
 		});
 		
 		// Display chat message from socket event
@@ -30,8 +30,6 @@ var WebSockets = {
 			var obj = JSON.parse(data);
 						
 			Interface.printChatMessage(obj.message);
-			
-			console.log(data.message);
 		});
 	}
 };

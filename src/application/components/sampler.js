@@ -213,14 +213,14 @@ var Sampler = {
 		
 		// Bind keypress event listener
 		document.addEventListener('keypress', function(e) {
-			var trigger = { key: String.fromCharCode(e.which) };
+			var key = String.fromCharCode(e.which);
 			
-			if(Interface.chatActive || !_this.sounds.hasOwnProperty(trigger)) return;
-						
-			WebSockets.broadcast('trigger', trigger.key);
+			if(Interface.chatActive || !Sampler.sounds.hasOwnProperty(key)) return;
+			
+			WebSockets.broadcast('trigger', { key: key });
 					
-			setTimeout(Sampler.playAudio(trigger.key), 300);
-			setTimeout(Sampler.playVideo(trigger.key), 300);
+			setTimeout(Sampler.playAudio(key), 300);
+			setTimeout(Sampler.playVideo(key), 300);
 		});
 	}
 };
