@@ -46,16 +46,18 @@ var Interface = {
 		$('.chat-messages :last-child').remove();
 	},
 	
-	printChatMessage: function(message) {
-		_this = this;
-		
+	printChatMessage: function(message) {		
 		if(message !== undefined && message !== '') {
 			$('.chat-messages').prepend('<span class="message">' + message + '</span>');
 			
 			if($('.chat-messages span').length > 5) {
-				_this.hideChatMessage();
+				this.hideChatMessage();
 			}
 		}
+	},
+	
+	toggleMenuItem: function(selector) {
+		document.querySelector(selector).classList.toggle('disabled');
 	},
 	
 	init: function() {
@@ -111,15 +113,6 @@ var Interface = {
 			_this.toggleChat();
 		});
 		
-		// Bind join session via GUID event listener
-		document.querySelector('#menu-join').addEventListener('click', function() {
-			// Open dialogue box to get room GUID
-			
-			// Join room
-			
-			// Make leave session active
-		});
-		
 		// Bind create new session event listener
 		document.querySelector('#menu-new').addEventListener('click', function() {
 			WebSockets.generateRoom();
@@ -129,6 +122,15 @@ var Interface = {
 		// Bind leave current session event listener
 		document.querySelector('#menu-leave').addEventListener('click', function() {
 			WebSockets.leaveRoom();
+		});
+		
+		// Bind join session via GUID event listener
+		document.querySelector('#menu-join').addEventListener('click', function() {
+			// Open dialogue box to get room GUID
+			
+			// Join room
+			
+			// Make leave session active
 		});
 	}
 };

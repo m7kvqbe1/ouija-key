@@ -30,11 +30,15 @@ var WebSockets = {
 		
 		this.room = room;
 		this.socket.emit('join', this.room);
+		
+		Interface.toggleMenuItem('#menu-leave');
 	},
 	
 	leaveRoom: function() {
 		this.room = null;
 		this.socket.emit('leave', this.room);
+		
+		Interface.toggleMenuItem('#menu-leave');
 	},
 	
 	generateRoom: function() {

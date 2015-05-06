@@ -156,6 +156,43 @@ body {
 	z-index: 10000;
 }
 
+.shortcuts {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	text-align: left;
+	z-index: 10000;
+	margin: 0;
+	padding: 0;
+}
+
+.shortcuts img,
+.shortcuts span {
+	display: inline-block;
+	margin: 0 20px;
+}
+
+.shortcuts span {
+	opacity: 0;
+	
+	transition: all 250ms ease-in-out;
+}
+
+.shortcuts:hover span {
+	display: inline-block;
+	opacity: 1;
+}
+
+.shortcuts img:first-child {
+	margin-bottom: -3px;
+	margin-left: 0;
+}
+
+.shortcuts strong {
+	color: #c9c9c9;
+	font-size: 1.2em;
+}
+
 #video-overlay,
 #video-bg {
 	position: fixed;

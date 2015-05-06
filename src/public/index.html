@@ -34,8 +34,6 @@
 </head>
 
 <body>
-	<span class="version hidden animated lightSpeedIn">Ouija Key v0.0.1</span>
-	
 	<span id="debug" class="hidden"></span>
 	
 	<a id="nav-toggle" class="unselectable" href="#">
@@ -47,7 +45,7 @@
 	<div class="loading">
 		<div class="loading-outer">
 			<div class="loading-inner">
-				<img src="/public/loader.svg" />
+				<img src="/public/svg/loader.svg" />
 			</div>
 		</div>
 	</div>
@@ -62,6 +60,16 @@
 				<li><a href="#" id="menu-help">Help &amp; Credits</a></li>
 			</ul>
 		</div>
+		
+		<p class="shortcuts animated bounceInLeft">
+			<img src="/public/svg/keyboard.svg" width="40px" />
+			<span><strong>ESC</strong><br />open / close menu</span>
+			<span><strong>Return</strong><br />chat</span>
+			<span><strong>A-Z</strong><br />trigger sample</span>
+			<span><strong>CapsLock</strong><br />switch sample bank</span>
+		</p>
+		
+		<span class="version hidden animated bounceInRight">Ouija Key v0.0.1</span>
 	</div>
 
 	<!-- Default background video -->
@@ -78,8 +86,8 @@
 		<input type="text" maxlength="150" autocomplete="off" spellcheck="false" placeholder="Enter your message" />
 	</div>
 	
-	<script src="/public/js/vendor.compiled.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="/public/js/vendor.compiled.js"></script>
 	<script src="/public/js/app.compiled.js"></script>
 </body>
 </html>
