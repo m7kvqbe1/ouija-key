@@ -1,19 +1,57 @@
 var WebSockets = {
-	socket: null,
-	
 	host: '',
 	
+	socket: null,
+	room: null,
+	
+	generateGuid: function() {
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		}
+	  
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	},
+
 	broadcast: function(eventType, payload) {
-		this.socket.emit(eventType, JSON.stringify(payload));
+		if(this.room) {
+			payload.room = this.room;	
+		}
+		
+		payload = JSON.stringify(payload);
+		
+		this.socket.emit(eventType, payload);
+	},
+	
+	joinRoom: function(room) {
+		if(room === undefined) {
+			console.warn('Please specify a room to join');
+			return;
+		}
+		
+		this.room = room;
+		this.socket.emit('join', this.room);
+	},
+	
+	leaveRoom: function() {
+		this.room = null;
+		this.socket.emit('leave', this.room);
+	},
+	
+	generateRoom: function() {
+		// Generate unique hash for room ID and join room
+		this.room = this.generateGuid();
+		this.joinRoom(this.room);
+		
+		return this.room;
 	},
 	
 	init: function(uri) {
-		if(uri !== undefined) {
-			this.host = uri;
-		} else {
+		if(uri === undefined) {
 			console.warn('No URI provided for server');
 			return;
 		}
+		
+		this.host = uri;
 		
 		// Create socket
 		this.socket = io.connect(this.host);

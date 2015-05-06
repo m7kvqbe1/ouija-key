@@ -42,9 +42,19 @@ var Interface = {
 		this.chatEnabled = (this.chatEnabled) ? false : true;
 	},
 	
+	hideChatMessage: function() {
+		$('.chat-messages :last-child').remove();
+	},
+	
 	printChatMessage: function(message) {
-		if(message !== undefined) {
-			$('.chat-messages').prepend('<span class="message">' + message + '</span>');	
+		_this = this;
+		
+		if(message !== undefined && message !== '') {
+			$('.chat-messages').prepend('<span class="message">' + message + '</span>');
+			
+			if($('.chat-messages span').length > 5) {
+				_this.hideChatMessage();
+			}
 		}
 	},
 	
@@ -88,17 +98,37 @@ var Interface = {
 			}
 		});
 		
+		// Clean out a message from the chat window every 40 seconds
+		(function cleanChat() {
+			setTimeout(function() {
+				_this.hideChatMessage();
+				cleanChat();
+			}, 40000);	
+		})();
+		
 		// Bind toggle chat event listener
 		document.querySelector('#menu-toggle-chat').addEventListener('click', function() {
 			_this.toggleChat();
 		});
+		
+		// Bind join session via GUID event listener
+		document.querySelector('#menu-join').addEventListener('click', function() {
+			// Open dialogue box to get room GUID
+			
+			// Join room
+			
+			// Make leave session active
+		});
+		
+		// Bind create new session event listener
+		document.querySelector('#menu-new').addEventListener('click', function() {
+			WebSockets.generateRoom();
+			console.log(WebSockets.room);
+		});
+		
+		// Bind leave current session event listener
+		document.querySelector('#menu-leave').addEventListener('click', function() {
+			WebSockets.leaveRoom();
+		});
 	}
 };
-
-// Hit return to open chat message window (set flag to prevent keypress sample triggers)
-
-// Hitting return key again when chat flag set sends message to WebSocket for broadcast
-
-// On receiving chat event from socket add message to chat messages window
-
-// Fade / animate out last message (max 5 messages visible)

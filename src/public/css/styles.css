@@ -76,12 +76,8 @@ body {
 }
 
 #nav-toggle.show {
-	opacity: 0.8;
-	transition-delay: 0s;
-}
-
-#nav-toggle.active {
 	opacity: 1;
+	transition-delay: 0s;
 }
 
 #nav-toggle span, 
@@ -174,7 +170,18 @@ body {
 
 #video-overlay {
 	z-index: 9998;
-	width: 100%;
+}
+
+#video-overlay video {
+	position: absolute;
+	bottom: 50%; 
+	right: 50%;
+	transform: translateX(-50%) translateY(-50%)
+	min-width: 100%; 
+	min-height: 100%; 
+	width: auto; 
+	height: auto;
+	overflow: hidden;
 }
 
 .chat-input {
