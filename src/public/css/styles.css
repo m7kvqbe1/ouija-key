@@ -29,7 +29,6 @@ body {
 	position: relative;
 	top: 10px;
 	left: 10px;
-	opacity: 0.8;
 }
 
 .menu,
@@ -251,7 +250,6 @@ body {
 	text-align: right;
 	
 	z-index: 9999;
-	opacity: 0.8;
 }
 
 .chat-messages span.message {
