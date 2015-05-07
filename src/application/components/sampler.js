@@ -2,7 +2,9 @@ var Sampler = {
 	assetRoot: null,
 	
 	assetCount: 99,	
+
 	assetsLoaded: 0,
+
 	preloadComplete: false,
 	
 	sounds: {
@@ -115,9 +117,9 @@ var Sampler = {
 		M: "52.webm",
 	},
 	
-	backgroundVideoElement: $('#video-bg'),
+	backgroundVideoElement: document.getElementById('#video-bg'),
 	
-	backgroundVideoOverlayElement: $('#video-overlay'),
+	backgroundVideoOverlayElement: document.getElementById('#video-overlay'),
 
 	loadCheck: function(uri) {
 		Sampler.assetsLoaded++;
@@ -137,7 +139,7 @@ var Sampler = {
 	preloadAudio: function(uri) {
 		var audio = new Audio();
 		
-		audio.addEventListener('canplaythrough', function() {
+		$(audio).on('canplaythrough', function() {
 			Sampler.loadCheck(uri);
 		}, false);
 		
@@ -152,11 +154,11 @@ var Sampler = {
 		source.type = 'video/webm';
 		
 		var video = document.createElement('video');
-		$(video).attr('id', 'video-overlay');
-		
 		video.appendChild(source);
 		
-		video.addEventListener('canplaythrough', function() {
+		$(video).attr('id', 'video-overlay');
+		
+		$(video).on('canplaythrough', function() {
 			Sampler.loadCheck(uri);
 		}, false);
 		
@@ -181,13 +183,11 @@ var Sampler = {
 		$('#video-wrapper video').attr('loop', 'loop');
 	},
 	
-	pauseVideo: function(e) {
+	pauseVideo: function() {
 		this.backgroundVideoOverlayElement.pause();
 	},
 	
 	init: function(assetRoot) {
-		_this = this;
-		
 		if(assetRoot !== undefined) {
 			this.assetRoot = assetRoot;
 		} else {
@@ -212,7 +212,7 @@ var Sampler = {
 		}
 		
 		// Bind keypress event listener
-		document.addEventListener('keypress', function(e) {
+		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
 			if(Interface.chatActive || !Sampler.sounds.hasOwnProperty(key)) return;

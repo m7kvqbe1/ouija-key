@@ -5,7 +5,9 @@ var Interface = {
 	menuActive: false,
 	
 	printDebug: function(message) {
-		$('#debug').text(message).removeClass('hidden');
+		$('#debug').text(message);
+		$('#debug').removeClass('hidden');
+		
 	},
 	
 	toggleMenuDisplay: function() {
@@ -13,9 +15,9 @@ var Interface = {
 			this.toggleChat();
 		}
 		
-		document.querySelector('#nav-toggle').classList.toggle('active');
-		document.querySelector('.menu').classList.toggle('hidden');	
-		document.querySelector('.version').classList.toggle('hidden');
+		$('#nav-toggle').toggleClass('active');
+		$('.menu').toggleClass('hidden');	
+		$('.version').toggleClass('hidden');
 				
 		this.menuActive = (this.menuActive) ? false : true;
 	},
@@ -24,20 +26,20 @@ var Interface = {
 		if(this.menuActive || !this.chatEnabled) {
 			return;
 		}
-		
-		document.querySelector('.chat-input').classList.toggle('hidden');
-		document.querySelector('.chat-input input').focus();
+				
+		$('.chat-input').toggleClass('hidden');
 		$('.chat-input input').val('');
+		document.querySelector('.chat-input input').focus();
 		
 		this.chatActive = (this.chatActive) ? false : true;
 	},
 	
 	toggleChat: function() {
-		document.querySelector('.chat-messages').classList.toggle('hidden');
-		document.querySelector('#menu-toggle-chat').classList.toggle('disabled');
+		$('.chat-messages').toggleClass('hidden');
+		$('#menu-toggle-chat').toggleClass('disabled');
 		
 		var text = (this.chatEnabled) ? 'Disabled' : 'Enabled';
-		$('.chat-toggle-text').html(text);
+		$('.chat-toggle-text').text(text);
 		
 		this.chatEnabled = (this.chatEnabled) ? false : true;
 	},
@@ -47,7 +49,7 @@ var Interface = {
 	},
 	
 	printChatMessage: function(message) {		
-		if(message !== undefined && message !== '') {
+		if(message !== undefined && message !== '') {			
 			$('.chat-messages').prepend('<span class="message">' + message + '</span>');
 			
 			if($('.chat-messages span').length > 5) {
@@ -57,19 +59,19 @@ var Interface = {
 	},
 	
 	toggleMenuItem: function(selector) {
-		document.querySelector(selector).classList.toggle('disabled');
+		$(selector).toggleClass('disabled');
 	},
 	
 	init: function() {
 		_this = this;
 		
 		// Bind open / close menu event listener
-		document.querySelector('#nav-toggle').addEventListener('click', function() {
+		$('#nav-toggle').on('click', function() {
 			_this.toggleMenuDisplay();
 		});
 		
 		// Bind keyboard shortcuts event listener
-		document.addEventListener('keyup', function(e) {
+		$(document).on('keyup', function(e) {
 			switch(e.keyCode) {
 				// Return key
 				case 13:
@@ -109,23 +111,23 @@ var Interface = {
 		})();
 		
 		// Bind toggle chat event listener
-		document.querySelector('#menu-toggle-chat').addEventListener('click', function() {
+		$('#menu-toggle-chat').on('click', function() {
 			_this.toggleChat();
 		});
 		
 		// Bind create new session event listener
-		document.querySelector('#menu-new').addEventListener('click', function() {
+		$('#menu-new').on('click', function() {
 			WebSockets.generateRoom();
 			console.log(WebSockets.room);
 		});
 		
 		// Bind leave current session event listener
-		document.querySelector('#menu-leave').addEventListener('click', function() {
+		$('#menu-leave').on('click', function() {
 			WebSockets.leaveRoom();
 		});
 		
 		// Bind join session via GUID event listener
-		document.querySelector('#menu-join').addEventListener('click', function() {
+		$('#menu-join').on('click', function() {
 			// Open dialogue box to get room GUID
 			
 			// Join room

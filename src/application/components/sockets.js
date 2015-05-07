@@ -38,7 +38,7 @@ var WebSockets = {
 		this.room = null;
 		this.socket.emit('leave', this.room);
 		
-		Interface.toggleMenuItem('#menu-leave');
+		Interface.toggleMenuItem('#menu-leave');	
 	},
 	
 	generateRoom: function() {
