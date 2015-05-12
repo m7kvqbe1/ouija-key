@@ -21,7 +21,7 @@ io.on('connection', function(socket) {
 		var obj = JSON.parse(data);
 		
 		if(obj.room !== undefined) {
-			io.sockets.in(obj.room).emit('trigger', data);	
+			socket.broadcast.to(obj.room).emit('trigger', data);	
 		} else {
 			socket.broadcast.emit('trigger', data);	
 		}

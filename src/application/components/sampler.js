@@ -217,7 +217,7 @@ var Sampler = {
 			
 			if(Interface.chatActive || !Sampler.sounds.hasOwnProperty(key)) return;
 			
-			WebSockets.broadcast('trigger', { key: key });
+			WebSocket.broadcast('trigger', { key: key });
 					
 			setTimeout(Sampler.playAudio(key), 300);
 			setTimeout(Sampler.playVideo(key), 300);

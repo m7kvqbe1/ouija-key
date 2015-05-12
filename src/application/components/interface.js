@@ -108,7 +108,7 @@ var Interface = {
 					break;
 				
 				// Escape key
-				case 27:
+				case 27:				
 					if(_this.chatActive) {
 						_this.toggleChatPrompt();
 					} else {
