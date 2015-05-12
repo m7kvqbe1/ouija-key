@@ -13,7 +13,7 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-// WebSockets
+// WebSocket
 io.on('connection', function(socket) {
 	console.log('client connected');
 	

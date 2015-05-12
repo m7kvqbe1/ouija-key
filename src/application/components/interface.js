@@ -1,6 +1,5 @@
 var Interface = {
 	menuActive: false,
-	
 	chatActive: false,
 	
 	chatEnabled: true,
@@ -21,14 +20,12 @@ var Interface = {
 		$(selector).toggleClass('disabled');
 	},
 	
-	toggleChatDisplay: function() {
+	toggleChatPrompt: function() {
 		if(this.menuActive || !this.chatEnabled) {
 			return;
 		}
-				
-		$('.chat-input').toggleClass('hidden');
-		$('.chat-input input').val('');
-		document.querySelector('.chat-input input').focus();
+		
+		this.openPrompt('Enter your message');
 		
 		this.chatActive = (this.chatActive) ? false : true;
 	},
@@ -57,7 +54,7 @@ var Interface = {
 		}
 	},
 	
-	displayRoomId: function(roomid) {
+	showRoomId: function(roomid) {
 		$('#room-id > span').text(roomid);
 		$('#room-id').removeClass('hidden');
 	},
@@ -70,6 +67,18 @@ var Interface = {
 		$('#debug').text(message);
 		$('#debug').removeClass('hidden');
 		
+	},
+	
+	openPrompt: function(message) {
+		$('#prompt input').attr('placeholder', message);
+		$('#prompt input').val('');
+		$('.version, .shortcuts').addClass('hidden');
+		$('#prompt').removeClass('hidden');
+		document.querySelector('#prompt input').focus();
+	},
+	
+	closePrompt: function() {
+		$('#prompt').addClass('hidden');
 	},
 	
 	init: function() {
@@ -86,22 +95,22 @@ var Interface = {
 				// Return key
 				case 13:
 					if(_this.chatActive && !_this.menuActive) {						
-						var message = $('.chat-input input').val();
+						var message = $('.console-input input').val();
 						
-						WebSockets.broadcast('chat', { message: message });
+						WebSocket.broadcast('chat', { message: message });
 						
 						_this.printChatMessage(message);
 						
-						_this.toggleChatDisplay();
+						_this.toggleChatPrompt();
 					} else {
-						_this.toggleChatDisplay();
+						_this.toggleChatPrompt();
 					}
 					break;
 				
 				// Escape key
 				case 27:
 					if(_this.chatActive) {
-						_this.toggleChatDisplay();
+						_this.toggleChatPrompt();
 					} else {
 						_this.toggleMenuDisplay();
 					}
@@ -112,14 +121,6 @@ var Interface = {
 			}
 		});
 		
-		// Clean out a message from the chat window every 40 seconds
-		(function cleanChat() {
-			setTimeout(function() {
-				_this.hideChatMessage();
-				cleanChat();
-			}, 40000);	
-		})();
-		
 		// Bind toggle chat event listener
 		$('#menu-toggle-chat').on('click', function() {
 			_this.toggleChat();
@@ -127,22 +128,26 @@ var Interface = {
 		
 		// Bind create new session event listener
 		$('#menu-new').on('click', function() {
-			WebSockets.generateRoom();
-			console.log(WebSockets.room);
+			WebSocket.generateRoom();
 		});
 		
 		// Bind leave current session event listener
 		$('#menu-leave').on('click', function() {
-			WebSockets.leaveRoom();
+			WebSocket.leaveRoom();
 		});
 		
-		// Bind join session via GUID event listener
+		// Join room click event listener
 		$('#menu-join').on('click', function() {
 			// Open dialogue box to get room GUID
-			
-			// Join room
-			
-			// Make leave session active
+			_this.openPrompt('Enter room ID');
 		});
+		
+		// Clean out a message from the chat window every 40 seconds
+		(function cleanChat() {
+			setTimeout(function() {
+				_this.hideChatMessage();
+				cleanChat();
+			}, 40000);	
+		})();
 	}
 };

@@ -1,8 +1,7 @@
-var WebSockets = {
+var WebSocket = {
 	host: '',
 	
 	socket: null,
-	
 	room: null,
 	
 	generateGuid: function() {
@@ -36,7 +35,7 @@ var WebSockets = {
 			Interface.toggleMenuItem('#menu-leave');
 		}
 		
-		Interface.displayRoomId(this.room);
+		Interface.showRoomId(this.room);
 	},
 	
 	leaveRoom: function() {
