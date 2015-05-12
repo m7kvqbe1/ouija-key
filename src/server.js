@@ -18,17 +18,27 @@ io.on('connection', function(socket) {
 	console.log('client connected');
 	
 	socket.on('trigger', function(data) {
-		socket.broadcast.emit('trigger', data);
-		//socket.broadcast.to(data.room).emit('trigger', data);
+		var obj = JSON.parse(data);
 		
-		console.log(data);
+		if(obj.room !== undefined) {
+			io.sockets.in(obj.room).emit('trigger', data);	
+		} else {
+			socket.broadcast.emit('trigger', data);	
+		}
+		
+		console.log(obj);
 	});
 	
 	socket.on('chat', function(data) {			
-		socket.broadcast.emit('chat', data);
-		//socket.broadcast.to(data.room).emit('chat', data);
+		var obj = JSON.parse(data);
 		
-		console.log(data);
+		if(obj.room !== undefined) {
+			io.sockets.in(obj.room).emit('chat', data);	
+		} else {
+			socket.broadcast.emit('chat', data);
+		}
+		
+		console.log(obj);
 	});
 	
 	// Join room

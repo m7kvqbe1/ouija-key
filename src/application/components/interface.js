@@ -1,14 +1,9 @@
 var Interface = {
-	chatEnabled: true,
-	chatActive: false,
-	
 	menuActive: false,
 	
-	printDebug: function(message) {
-		$('#debug').text(message);
-		$('#debug').removeClass('hidden');
-		
-	},
+	chatActive: false,
+	
+	chatEnabled: true,
 	
 	toggleMenuDisplay: function() {
 		if(this.chatActive) {
@@ -20,6 +15,10 @@ var Interface = {
 		$('.version').toggleClass('hidden');
 				
 		this.menuActive = (this.menuActive) ? false : true;
+	},
+	
+	toggleMenuItem: function(selector) {
+		$(selector).toggleClass('disabled');
 	},
 	
 	toggleChatDisplay: function() {
@@ -58,8 +57,10 @@ var Interface = {
 		}
 	},
 	
-	toggleMenuItem: function(selector) {
-		$(selector).toggleClass('disabled');
+	printDebug: function(message) {
+		$('#debug').text(message);
+		$('#debug').removeClass('hidden');
+		
 	},
 	
 	init: function() {

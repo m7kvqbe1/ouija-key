@@ -2,6 +2,7 @@ var WebSockets = {
 	host: '',
 	
 	socket: null,
+	
 	room: null,
 	
 	generateGuid: function() {
@@ -35,14 +36,14 @@ var WebSockets = {
 	},
 	
 	leaveRoom: function() {
-		this.room = null;
 		this.socket.emit('leave', this.room);
+		this.room = null;
 		
 		Interface.toggleMenuItem('#menu-leave');	
 	},
 	
 	generateRoom: function() {
-		// Generate unique hash for room ID and join room
+		// Generate hash for room ID and join room
 		this.room = this.generateGuid();
 		this.joinRoom(this.room);
 		
