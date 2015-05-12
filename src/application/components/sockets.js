@@ -42,7 +42,10 @@ var WebSocket = {
 		this.socket.emit('leave', this.room);
 		this.room = null;
 		
-		Interface.toggleMenuItem('#menu-leave');	
+		if(!$('#menu-leave').hasClass('disabled')) {
+			Interface.toggleMenuItem('#menu-leave');
+		}
+		
 		Interface.hideRoomId();
 	},
 	
