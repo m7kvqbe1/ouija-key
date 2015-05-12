@@ -147,6 +147,14 @@ body {
 	color: #c9c9c9;
 }
 
+#room-id {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	text-align: right;
+	z-index: 10000;
+}
+
 .version {
 	position: fixed;
 	bottom: 20px;

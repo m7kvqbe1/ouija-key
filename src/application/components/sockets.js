@@ -32,7 +32,11 @@ var WebSockets = {
 		this.room = room;
 		this.socket.emit('join', this.room);
 		
-		Interface.toggleMenuItem('#menu-leave');
+		if($('#menu-leave').hasClass('disabled')) {
+			Interface.toggleMenuItem('#menu-leave');
+		}
+		
+		Interface.displayRoomId(this.room);
 	},
 	
 	leaveRoom: function() {
@@ -40,6 +44,7 @@ var WebSockets = {
 		this.room = null;
 		
 		Interface.toggleMenuItem('#menu-leave');	
+		Interface.hideRoomId();
 	},
 	
 	generateRoom: function() {

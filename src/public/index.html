@@ -53,21 +53,26 @@
 	<div class="menu hidden">
 		<div class="menu-outer animated bounceInDown">
 			<ul>
-				<li><a href="#" id="menu-join">Join Session</a></li>
-				<li><a href="#" id="menu-new">Create New Session</a></li>
-				<li><a href="#" id="menu-leave" class="disabled">Leave Session</a></li>
+				<li><a href="#" id="menu-join">Join Room</a></li>
+				<li><a href="#" id="menu-new">Create New Room</a></li>
+				<li><a href="#" id="menu-leave" class="disabled">Leave Room</a></li>
 				<li><a href="#" id="menu-toggle-chat">Toggle Chat (<span class="chat-toggle-text">Enabled</span>)</a></li>
 				<li><a href="#" id="menu-help">Help &amp; Credits</a></li>
 			</ul>
 		</div>
 		
-		<p class="shortcuts unselectable animated bounceInLeft">
+		<div id="room-id" class="hidden animated bounceInRight">
+			<strong>Current Room ID:</strong><br />
+			<span></span>
+		</div>
+		
+		<div class="shortcuts unselectable animated bounceInLeft">
 			<img src="/public/svg/keyboard.svg" width="40px" />
 			<span><strong>ESC</strong><br />open / close menu</span>
 			<span><strong>Return</strong><br />chat</span>
 			<span><strong>A - Z</strong><br />trigger sample</span>
 			<span><strong>Caps Lock</strong><br />switch sample bank</span>
-		</p>
+		</div>
 		
 		<span class="version hidden animated bounceInRight">Ouija Key v0.0.1</span>
 	</div>

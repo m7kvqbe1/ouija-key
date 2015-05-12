@@ -57,6 +57,15 @@ var Interface = {
 		}
 	},
 	
+	displayRoomId: function(roomid) {
+		$('#room-id > span').text(roomid);
+		$('#room-id').removeClass('hidden');
+	},
+	
+	hideRoomId: function() {
+		$('#room-id').addClass('hidden');
+	},
+	
 	printDebug: function(message) {
 		$('#debug').text(message);
 		$('#debug').removeClass('hidden');
