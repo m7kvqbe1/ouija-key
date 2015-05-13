@@ -196,19 +196,15 @@ var Sampler = {
 		}
 		
 		// Preload audio assets
-		for(var property in this.sounds) {
-			if(this.hasOwnProperty('sounds')) {			
-				var fileName = this.sounds[property];
-				this.sounds[property] = this.preloadAudio(this.assetRoot + '/audio/' + fileName);
-			}
+		for(var property in this.sounds) {			
+			var fileName = this.sounds[property];
+			this.sounds[property] = this.preloadAudio(this.assetRoot + '/audio/' + fileName);
 		}
 		
 		// Preload video assets
 		for(var property in this.videos) {
-			if(this.hasOwnProperty('videos')) {
-				var fileName = this.videos[property];
-				this.videos[property] = this.preloadVideo(this.assetRoot + '/video/' + fileName);
-			}
+			var fileName = this.videos[property];
+			this.videos[property] = this.preloadVideo(this.assetRoot + '/video/' + fileName);
 		}
 		
 		// Bind keypress event listener
