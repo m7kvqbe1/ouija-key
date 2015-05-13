@@ -45,7 +45,7 @@ var Interface = {
 	},
 	
 	printChatMessage: function(message) {		
-		if(message !== undefined && message !== '') {			
+		if(typeof message !== 'undefined' && message !== '') {			
 			$('.chat-messages').prepend('<span class="message">' + message + '</span>');
 			
 			if($('.chat-messages span').length > 5) {
@@ -82,11 +82,11 @@ var Interface = {
 	},
 	
 	init: function() {
-		_this = this;
+		self = this;
 		
 		// Bind open / close menu event listener
 		$('#nav-toggle').on('click', function() {
-			_this.toggleMenuDisplay();
+			self.toggleMenuDisplay();
 		});
 		
 		// Bind keyboard shortcuts event listener
@@ -94,25 +94,25 @@ var Interface = {
 			switch(e.keyCode) {
 				// Return key
 				case 13:
-					if(_this.chatActive && !_this.menuActive) {						
+					if(self.chatActive && !self.menuActive) {						
 						var message = $('.console-input input').val();
 						
 						WebSocket.broadcast('chat', { message: message });
 						
-						_this.printChatMessage(message);
+						self.printChatMessage(message);
 						
-						_this.toggleChatPrompt();
+						self.toggleChatPrompt();
 					} else {
-						_this.toggleChatPrompt();
+						self.toggleChatPrompt();
 					}
 					break;
 				
 				// Escape key
 				case 27:				
-					if(_this.chatActive) {
-						_this.toggleChatPrompt();
+					if(self.chatActive) {
+						self.toggleChatPrompt();
 					} else {
-						_this.toggleMenuDisplay();
+						self.toggleMenuDisplay();
 					}
 					break;
 				
@@ -123,7 +123,7 @@ var Interface = {
 		
 		// Bind toggle chat event listener
 		$('#menu-toggle-chat').on('click', function() {
-			_this.toggleChat();
+			self.toggleChat();
 		});
 		
 		// Bind create new session event listener
@@ -139,13 +139,14 @@ var Interface = {
 		// Join room click event listener
 		$('#menu-join').on('click', function() {
 			// Open dialogue box to get room GUID
-			_this.openPrompt('Enter room ID');
+			self.openPrompt('Enter room ID');
 		});
 		
 		// Clean out a message from the chat window every 40 seconds
 		(function cleanChat() {
+			// Using setTimeout prevents filling up the call stack
 			setTimeout(function() {
-				_this.hideChatMessage();
+				self.hideChatMessage();
 				cleanChat();
 			}, 40000);	
 		})();

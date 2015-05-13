@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
 	socket.on('trigger', function(data) {
 		var obj = JSON.parse(data);
 		
-		if(obj.room !== undefined) {
+		if(typeof obj.room !== 'undefined') {
 			socket.broadcast.to(obj.room).emit('trigger', data);	
 		} else {
 			socket.broadcast.emit('trigger', data);	
@@ -32,7 +32,7 @@ io.on('connection', function(socket) {
 	socket.on('chat', function(data) {			
 		var obj = JSON.parse(data);
 		
-		if(obj.room !== undefined) {
+		if(typeof obj.room !== 'undefined') {
 			io.sockets.in(obj.room).emit('chat', data);	
 		} else {
 			socket.broadcast.emit('chat', data);

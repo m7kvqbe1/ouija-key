@@ -23,7 +23,7 @@ var WebSocket = {
 	},
 	
 	joinRoom: function(room) {
-		if(room === undefined) {
+		if(typeof room === 'undefined') {
 			console.warn('Please specify a room to join');
 			return;
 		}
@@ -58,7 +58,7 @@ var WebSocket = {
 	},
 	
 	init: function(uri) {
-		if(uri === undefined) {
+		if(typeof uri === 'undefined') {
 			console.warn('No URI provided for server');
 			return;
 		}

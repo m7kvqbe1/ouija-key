@@ -188,7 +188,7 @@ var Sampler = {
 	},
 	
 	init: function(assetRoot) {
-		if(assetRoot !== undefined) {
+		if(typeof assetRoot !== 'undefined') {
 			this.assetRoot = assetRoot;
 		} else {
 			console.warn('Audio and video asset source undefined');
