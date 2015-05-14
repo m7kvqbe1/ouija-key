@@ -1,12 +1,13 @@
 var Interface = {
 	menuActive: false,
-	chatActive: false,
+
+	promptActive: false,
 	
 	chatEnabled: true,
 	
 	toggleMenuDisplay: function() {
-		if(this.chatActive) {
-			this.toggleChat();
+		if(this.promptActive) {
+			this.closePrompt();
 		}
 		
 		$('#nav-toggle').toggleClass('active');
@@ -18,16 +19,6 @@ var Interface = {
 	
 	toggleMenuItem: function(selector) {
 		$(selector).toggleClass('disabled');
-	},
-	
-	toggleChatPrompt: function() {
-		if(this.menuActive || !this.chatEnabled) {
-			return;
-		}
-		
-		this.openPrompt('Enter your message');
-		
-		this.chatActive = (this.chatActive) ? false : true;
 	},
 	
 	toggleChat: function() {
@@ -69,22 +60,55 @@ var Interface = {
 		
 	},
 	
-	openPrompt: function(message) {
+	openPrompt: function(message, type) {
 		$('#prompt input').attr('placeholder', message);
 		$('#prompt input').val('');
 		$('.version, .shortcuts').addClass('hidden');
 		$('#prompt').removeClass('hidden');
+		$('#prompt').attr('data-type', type);
 		document.querySelector('#prompt input').focus();
+		
+		this.promptActive = true;
 	},
 	
 	closePrompt: function() {
 		$('#prompt').addClass('hidden');
+		$('.version, .shortcuts').removeClass('hidden');
+		
+		this.promptActive = false;
+	},
+	
+	promptAction: function() {
+		var type = $('#prompt').attr('data-type');
+		switch(type) {
+			case 'chat':
+				var message = $('#prompt input').val();
+				
+				WebSocket.broadcast('chat', { message: message });
+				
+				this.printChatMessage(message);
+				
+				this.closePrompt();
+				return;
+			
+			case 'join':
+				var guid = $('#prompt input').val();
+				
+				WebSocket.joinRoom(guid);
+				
+				this.closePrompt();
+				return;
+				
+			default:
+				this.closePrompt();
+				return;
+		}
 	},
 	
 	init: function() {
 		_this = this;
 		
-		// Bind open / close menu event listener
+		// Bind open / close menu button event listener
 		$('#nav-toggle').on('click', function() {
 			_this.toggleMenuDisplay();
 		});
@@ -94,27 +118,21 @@ var Interface = {
 			switch(e.keyCode) {
 				// Return key
 				case 13:
-					if(_this.chatActive && !_this.menuActive) {						
-						var message = $('.console-input input').val();
-						
-						WebSocket.broadcast('chat', { message: message });
-						
-						_this.printChatMessage(message);
-						
-						_this.toggleChatPrompt();
-					} else {
-						_this.toggleChatPrompt();
+					if(_this.promptActive) {
+						_this.promptAction();
+					} else if(!_this.menuActive && _this.chatEnabled) {
+						_this.openPrompt('Enter your message', 'chat');
 					}
-					break;
+					return;
 				
 				// Escape key
 				case 27:				
-					if(_this.chatActive) {
-						_this.toggleChatPrompt();
+					if(_this.promptActive) {
+						_this.closePrompt()
 					} else {
 						_this.toggleMenuDisplay();
 					}
-					break;
+					return;
 				
 				default:
 					return;
@@ -138,8 +156,8 @@ var Interface = {
 		
 		// Join room click event listener
 		$('#menu-join').on('click', function() {
-			// Open dialogue box to get room GUID
-			_this.openPrompt('Enter room ID');
+			// Open dialogue box to enter room GUID
+			_this.openPrompt('Enter room ID', 'join');
 		});
 		
 		// Clean out a message from the chat window every 40 seconds

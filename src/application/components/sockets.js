@@ -71,6 +71,8 @@ var WebSocket = {
 		// Trigger samples from socket event
 		this.socket.on('trigger', function(data) {
 			var obj = JSON.parse(data);
+			 
+			if(this.room !== null && typeof obj.room === 'undefined') return;
 			
 			setTimeout(Sampler.playAudio(obj.key), 300);
 			setTimeout(Sampler.playVideo(obj.key), 300);

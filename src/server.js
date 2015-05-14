@@ -1,17 +1,18 @@
 var express = require('express');
 var app = express();
+
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 // Define static assets directory
 app.use('/public', express.static(__dirname + '/public'));
 
-server.listen(8080);
-
-// Default route
+// Default route send client app
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/public/index.html');
 });
+
+server.listen(8080);
 
 // WebSocket
 io.on('connection', function(socket) {
@@ -33,7 +34,7 @@ io.on('connection', function(socket) {
 		var obj = JSON.parse(data);
 		
 		if(typeof obj.room !== 'undefined') {
-			io.sockets.in(obj.room).emit('chat', data);	
+			socket.broadcast.to(obj.room).emit('chat', data);
 		} else {
 			socket.broadcast.emit('chat', data);
 		}

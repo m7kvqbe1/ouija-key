@@ -211,7 +211,7 @@ var Sampler = {
 		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
-			if(Interface.chatActive || !Sampler.sounds.hasOwnProperty(key)) return;
+			if(Interface.promptActive || !Sampler.sounds.hasOwnProperty(key)) return;
 			
 			WebSocket.broadcast('trigger', { key: key });
 					
