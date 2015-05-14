@@ -24,6 +24,22 @@ body {
 	opacity: 0.2;
 }
 
+.outer {
+	position: relative;
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	height: 100%;
+}
+
+.inner {
+	width: 100%;
+	height: 100%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
 #debug {
 	z-index: 9999;
 	position: relative;
@@ -46,20 +62,9 @@ body {
 	zoom: 1;
 }
 
-.loading-outer {
-	position: relative;
-	display: table;
-	table-layout: fixed;
-	width: 100%;
-	height: 100%;
-}
-
-.loading-inner {
-	width: 100%;
-	height: 100%;
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
+.loading span {
+	line-height: 2em;
+	padding: 40px;
 }
 
 #nav-toggle { 

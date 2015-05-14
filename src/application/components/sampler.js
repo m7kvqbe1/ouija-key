@@ -132,7 +132,7 @@ var Sampler = {
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 			
-			Interface.toggleMenuDisplay();
+			if(!Interface.mobile) Interface.toggleMenuDisplay();
 		}
 	},
 	
@@ -188,6 +188,8 @@ var Sampler = {
 	},
 	
 	init: function(assetRoot) {
+		if(Interface.mobile) return;
+		
 		if(typeof assetRoot !== 'undefined') {
 			this.assetRoot = assetRoot;
 		} else {
@@ -215,6 +217,7 @@ var Sampler = {
 			
 			WebSocket.broadcast('trigger', { key: key });
 					
+			// 300ms delay to help stop browser being overloaded
 			setTimeout(Sampler.playAudio(key), 300);
 			setTimeout(Sampler.playVideo(key), 300);
 		});
