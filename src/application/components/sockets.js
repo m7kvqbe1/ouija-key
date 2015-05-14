@@ -4,7 +4,7 @@ var WebSocket = {
 	socket: null,
 	room: null,
 	
-	generateGuid: function() {
+	generateUuid: function() {
 		function s4() {
 			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 		}

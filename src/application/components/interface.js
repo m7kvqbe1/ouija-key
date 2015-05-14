@@ -1,11 +1,11 @@
 var Interface = {
 	mobile: false,
 	
+	chatEnabled: true,
+	
 	menuActive: false,
 
 	promptActive: false,
-	
-	chatEnabled: true,
 	
 	toggleMenuDisplay: function() {
 		if(this.promptActive) {
@@ -113,7 +113,7 @@ var Interface = {
 	init: function() {
 		_this = this;
 		
-		// Display warning to mobile devices
+		// Display warning to mobile / tablet devices
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			this.mobile = true;
 			$('video, .chat-messages').addClass('hidden');
