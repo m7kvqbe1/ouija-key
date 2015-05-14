@@ -1,5 +1,5 @@
 var Interface = {
-	mobile: false,
+	mobile: true,
 	
 	menuActive: false,
 
@@ -112,7 +112,8 @@ var Interface = {
 		// Display warning to mobile devices
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			this.mobile = true;
-			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon with a laptop or desktop computer.</span>');
+			$('video').addClass('hidden');
+			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon using a laptop or desktop computer.</span>');
 		}
 		
 		// Bind open / close menu button event listener

@@ -64,7 +64,10 @@ body {
 
 .loading span {
 	line-height: 2em;
-	padding: 40px;
+	width: auto;
+	padding: 0 20%;
+	font-size: 1em;
+	display: block;
 }
 
 #nav-toggle { 
