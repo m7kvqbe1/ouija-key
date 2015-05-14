@@ -54,7 +54,7 @@ var WebSocket = {
 		if(this.room) this.leaveRoom();
 		
 		// Generate hash for room ID and join room
-		this.room = this.generateGuid();
+		this.room = this.generateUuid();
 		this.joinRoom(this.room);
 		
 		return this.room;
