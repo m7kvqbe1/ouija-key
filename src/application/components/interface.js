@@ -1,5 +1,5 @@
 var Interface = {
-	mobile: true,
+	mobile: false,
 	
 	menuActive: false,
 
@@ -30,6 +30,10 @@ var Interface = {
 		$('.chat-toggle-text').text(text);
 		
 		this.chatEnabled = (this.chatEnabled) ? false : true;
+	},
+	
+	clearChat: function() {
+		$('.chat-messages').html('');
 	},
 	
 	hideChatMessage: function() {
@@ -112,7 +116,7 @@ var Interface = {
 		// Display warning to mobile devices
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			this.mobile = true;
-			$('video').addClass('hidden');
+			$('video, .chat-messages').addClass('hidden');
 			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon using a laptop or desktop computer.</span>');
 		}
 		
@@ -166,6 +170,11 @@ var Interface = {
 		$('#menu-join').on('click', function() {
 			// Open dialogue box to enter room GUID
 			_this.openPrompt('Enter room ID', 'join');
+		});
+		
+		// Close prompt
+		$('#prompt .icon-close').on('click', function() {
+			_this.closePrompt();
 		});
 		
 		// Clean out a message from the chat window every 40 seconds

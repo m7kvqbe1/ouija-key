@@ -239,11 +239,24 @@ body {
 #prompt {
 	position: fixed;
 	bottom: 20px;
-	left: 2%;
-	width: 96%;
+	left: 0;
+	width: 100%;
 	margin: 0 auto;
+	box-sizing: border-box;
+	padding: 0 20px;
 	
 	z-index: 9999;
+}
+
+#prompt .icon-close {
+	position: absolute;
+	top: -20px;
+	right: 10px;
+	font-size: 2em;
+}
+
+#prompt .icon-close:hover {
+	cursor: pointer;
 }
 
 #prompt input[type="text"] {
