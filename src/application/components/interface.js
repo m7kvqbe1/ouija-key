@@ -87,21 +87,18 @@ var Interface = {
 				WebSocket.broadcast('chat', { message: message });
 				
 				this.printChatMessage(message);
-				
-				this.closePrompt();
-				return;
+				break;
 			
 			case 'join':
 				var guid = $('#prompt input').val();
 				
 				WebSocket.joinRoom(guid);
-				
-				this.closePrompt();
-				return;
+				break;
 				
 			default:
-				this.closePrompt();
-				return;
+				break;
+				
+			this.closePrompt();
 		}
 	},
 	
