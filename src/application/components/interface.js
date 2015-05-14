@@ -11,8 +11,7 @@ var Interface = {
 		}
 		
 		$('#nav-toggle').toggleClass('active');
-		$('.menu').toggleClass('hidden');	
-		$('.version').toggleClass('hidden');
+		$('.menu').toggleClass('hidden');
 				
 		this.menuActive = (this.menuActive) ? false : true;
 	},
@@ -80,6 +79,7 @@ var Interface = {
 	
 	promptAction: function() {
 		var type = $('#prompt').attr('data-type');
+		
 		switch(type) {
 			case 'chat':
 				var message = $('#prompt input').val();
@@ -92,14 +92,16 @@ var Interface = {
 			case 'join':
 				var guid = $('#prompt input').val();
 				
+				if(WebSocket.room) WebSocket.leaveRoom();
+				
 				WebSocket.joinRoom(guid);
 				break;
 				
 			default:
 				break;
-				
-			this.closePrompt();
 		}
+		
+		this.closePrompt();
 	},
 	
 	init: function() {

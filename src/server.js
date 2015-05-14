@@ -18,6 +18,7 @@ server.listen(8080);
 io.on('connection', function(socket) {
 	console.log('client connected');
 	
+	// Relay sample triggers
 	socket.on('trigger', function(data) {
 		var obj = JSON.parse(data);
 		
@@ -30,6 +31,7 @@ io.on('connection', function(socket) {
 		console.log(obj);
 	});
 	
+	// Relay chat messages
 	socket.on('chat', function(data) {			
 		var obj = JSON.parse(data);
 		
