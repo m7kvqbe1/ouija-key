@@ -75,9 +75,9 @@ var WebSocket = {
 		this.socket.on('trigger', function(data) {
 			var obj = JSON.parse(data);
 			
-			// 300ms delay to help stop browser being overloaded
-			setTimeout(Sampler.playAudio(obj.key), 300);
-			setTimeout(Sampler.playVideo(obj.key), 300);
+			// Using setTimeout to help stop browser being overloaded by spamming the call stack
+			setTimeout(Sampler.playAudio(obj.key), 0);
+			setTimeout(Sampler.playVideo(obj.key), 0);
 		});
 		
 		// Display chat message from socket event

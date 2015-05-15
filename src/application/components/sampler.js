@@ -217,9 +217,9 @@ var Sampler = {
 			
 			WebSocket.broadcast('trigger', { key: key });
 					
-			// 300ms delay to help stop browser being overloaded
-			setTimeout(Sampler.playAudio(key), 300);
-			setTimeout(Sampler.playVideo(key), 300);
+			// Using setTimeout to help stop browser being overloaded by spamming the call stack
+			setTimeout(Sampler.playAudio(key), 0);
+			setTimeout(Sampler.playVideo(key), 0);
 		});
 	}
 };

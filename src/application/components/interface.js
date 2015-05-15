@@ -160,12 +160,12 @@ var Interface = {
 			_this.toggleChat();
 		});
 		
-		// Bind create new session event listener
+		// Bind create new room event listener
 		$('#menu-new').on('click', function() {
 			WebSocket.generateRoom();
 		});
 		
-		// Bind leave current session event listener
+		// Bind leave current room event listener
 		$('#menu-leave').on('click', function() {
 			WebSocket.leaveRoom();
 		});
@@ -183,7 +183,6 @@ var Interface = {
 		
 		// Clean out a message from the chat window every 40 seconds
 		(function cleanChat() {
-			// Using setTimeout prevents filling up the call stack
 			setTimeout(function() {
 				_this.hideChatMessage();
 				cleanChat();
