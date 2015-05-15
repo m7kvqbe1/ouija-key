@@ -110,15 +110,19 @@ var Interface = {
 		this.closePrompt();
 	},
 	
-	init: function() {
-		_this = this;
-		
+	browserCheck: function() {
 		// Display warning to mobile / tablet devices
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			this.mobile = true;
 			$('video, .chat-messages').addClass('hidden');
 			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon using a laptop or desktop computer.</span>');
-		}
+		}		
+	},
+
+	init: function() {
+		_this = this;
+		
+		this.browserCheck();
 		
 		// Bind open / close menu button event listener
 		$('#nav-toggle').on('click', function() {
