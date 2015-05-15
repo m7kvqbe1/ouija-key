@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 					'./application/vendor/*/*.js'
 				],
 				
-				dest: './public/js/vendor.compiled.js'
+				dest: './public/js/vendor.min.js'
 			},
 
 			app: {
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 					'./application/app.js'
 				],
 
-				dest: './public/js/app.compiled.js'
+				dest: './public/js/app.min.js'
 			}
 		}
 	});
