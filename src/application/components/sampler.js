@@ -1,7 +1,7 @@
 var Sampler = {
 	assetRoot: null,
 	
-	assetCount: 99,	
+	assetCount: 94,	
 
 	assetsLoaded: 0,
 
@@ -59,7 +59,7 @@ var Sampler = {
 		V: "S49.wav",
 		B: "S50.wav",
 		N: "S51.wav",
-		M: "S52.wav",
+		M: "S52.wav"
 	},
 	
 	videos: {
@@ -110,11 +110,11 @@ var Sampler = {
 		L: "45.webm",
 		Z: "46.webm",
 		X: "47.webm",
-		C: "48.webm",
-		V: "49.webm",
-		B: "50.webm",
-		N: "51.webm",
-		M: "52.webm",
+		//C: "48.webm",
+		//V: "49.webm",
+		//B: "50.webm",
+		//N: "51.webm",
+		//M: "52.webm"
 	},
 	
 	backgroundVideoElement: document.getElementById('#video-bg'),
@@ -213,11 +213,12 @@ var Sampler = {
 		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
-			if(Interface.promptActive || !Sampler.sounds.hasOwnProperty(key)) return;
+			if(!Interface.promptActive || Sampler.video.hasOwnProperty(key)) return;
 			
 			WebSocket.broadcast('trigger', { key: key });
 					
-			// Using setTimeout to help stop browser being overloaded by spamming the call stack
+			// Using setTimeout 0 to prevent overloading 
+			// of the call stack and crashing the app
 			setTimeout(Sampler.playAudio(key), 0);
 			setTimeout(Sampler.playVideo(key), 0);
 		});

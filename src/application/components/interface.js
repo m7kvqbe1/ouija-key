@@ -111,7 +111,6 @@ var Interface = {
 	},
 	
 	browserCheck: function() {
-		// Display warning to mobile / tablet devices
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			this.mobile = true;
 			$('video, .chat-messages').addClass('hidden');
