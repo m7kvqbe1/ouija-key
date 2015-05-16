@@ -126,7 +126,7 @@ var Sampler = {
 		
 		Interface.printDebug('Loading: ' + uri);
 		
-		if(Sampler.assetsLoaded >= Sampler.assetCount) {
+		if(Sampler.assetsLoaded === Sampler.assetCount) {
 			Sampler.preloadComplete = true;
 			
 			$('.loading, #debug').addClass('hidden');
@@ -213,14 +213,14 @@ var Sampler = {
 		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
-			if(!Interface.promptActive || Sampler.video.hasOwnProperty(key)) return;
+			if(Interface.promptActive || !Sampler.videos.hasOwnProperty(key)) return;
 			
 			WebSocket.broadcast('trigger', { key: key });
 					
-			// Using setTimeout 0 to prevent overloading 
+			// Using setTimeout to prevent overloading 
 			// of the call stack and crashing the app
-			setTimeout(Sampler.playAudio(key), 0);
-			setTimeout(Sampler.playVideo(key), 0);
+			setTimeout(Sampler.playAudio(key), 50);
+			setTimeout(Sampler.playVideo(key), 50);
 		});
 	}
 };

@@ -75,10 +75,10 @@ var WebSocket = {
 		this.socket.on('trigger', function(data) {
 			var obj = JSON.parse(data);
 			
-			// Using setTimeout 0 to prevent overloading
+			// Using setTimeout to prevent overloading
 			// of the call stack and crashing the app
-			setTimeout(Sampler.playAudio(obj.key), 0);
-			setTimeout(Sampler.playVideo(obj.key), 0);
+			setTimeout(Sampler.playAudio(obj.key), 50);
+			setTimeout(Sampler.playVideo(obj.key), 50);
 		});
 		
 		// Display chat message from socket event
