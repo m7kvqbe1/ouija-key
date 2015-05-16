@@ -1,13 +1,16 @@
-var Sampler = {
-	assetRoot: null,
+var Sampler = (function() {
+	var Module = {};
 	
-	assetCount: 94,	
-
-	assetsLoaded: 0,
-
-	preloadComplete: false,
+	var _assetRoot = null;		
+	var _assetCount = 99;	
+	var _assetsLoaded = 0;
 	
-	sounds: {
+	var _preloadComplete = false;
+	
+	var _backgroundVideoElement = document.getElementById('#video-bg');
+	var _backgroundVideoOverlayElement = document.getElementById('#video-overlay');
+	
+	Module.sounds = {
 		q: "S01.wav",
 		w: "S02.wav",
 		e: "S03.wav",
@@ -60,9 +63,9 @@ var Sampler = {
 		B: "S50.wav",
 		N: "S51.wav",
 		M: "S52.wav"
-	},
+	};
 	
-	videos: {
+	Module.videos = {
 		q: "01.webm",
 		w: "02.webm",
 		e: "03.webm",
@@ -115,40 +118,36 @@ var Sampler = {
 		//B: "50.webm",
 		//N: "51.webm",
 		//M: "52.webm"
-	},
-	
-	backgroundVideoElement: document.getElementById('#video-bg'),
-	
-	backgroundVideoOverlayElement: document.getElementById('#video-overlay'),
+	};
 
-	loadCheck: function(uri) {
-		Sampler.assetsLoaded++;
+	var _loadCheck = function(uri) {
+		_assetsLoaded++;
 		
-		Interface.printDebug('Loading: ' + uri);
+		UserInterface.printDebug('Loading: ' + uri);
 		
-		if(Sampler.assetsLoaded === Sampler.assetCount) {
-			Sampler.preloadComplete = true;
+		if(_assetsLoaded === _assetCount) {
+			_preloadComplete = true;
 			
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 			
-			if(!Interface.mobile) Interface.toggleMenuDisplay();
+			if(!UserInterface.mobile) UserInterface.toggleMenuDisplay();
 		}
-	},
+	}
 	
-	preloadAudio: function(uri) {
+	var _preloadAudio = function(uri) {
 		var audio = new Audio();
 		
 		$(audio).on('canplaythrough', function() {
-			Sampler.loadCheck(uri);
+			_loadCheck(uri);
 		}, false);
 		
 		audio.src = uri;
 		
 		return audio;
-	},
+	}
 	
-	preloadVideo: function(uri) {
+	var _preloadVideo = function(uri) {
 		var source = document.createElement('source');
 		source.src = uri;    
 		source.type = 'video/webm';
@@ -159,68 +158,70 @@ var Sampler = {
 		$(video).attr('id', 'video-overlay');
 		
 		$(video).on('canplaythrough', function() {
-			Sampler.loadCheck(uri);
+			_loadCheck(uri);
 		}, false);
 		
 		return video;
-	},
+	}
 	
-	playAudio: function(key) {
-		if(!this.preloadComplete) return;
+	Module.playAudio = function(key) {
+		if(!_preloadComplete) return;
 				
 		// Create new audio element (allows for MPC note-repeat emulation)
 		var audioElement = document.createElement('audio');
 		$(audioElement).attr('autoplay', 'autoplay');
-		$(audioElement).attr('src', this.sounds[key].src);
-	},
+		$(audioElement).attr('src', Module.sounds[key].src);
+	};
 	
-	playVideo: function(key) {			
-		if(!this.preloadComplete) return;
+	Module.playVideo = function(key) {			
+		if(!_preloadComplete) return;
 		
 		// Add preloaded video element to DOM (autoplay and loop)
-		$('#video-wrapper').html(this.videos[key].outerHTML);
+		$('#video-wrapper').html(Module.videos[key].outerHTML);
 		$('#video-wrapper video').attr('autoplay', 'autoplay');
 		$('#video-wrapper video').attr('loop', 'loop');
-	},
+	};
 	
-	pauseVideo: function() {
-		this.backgroundVideoOverlayElement.pause();
-	},
+	Module.pauseVideo = function() {
+		_backgroundVideoOverlayElement.pause();
+	};
 	
-	init: function(assetRoot) {
-		if(Interface.mobile) return;
+	Module.init = function(assetRoot) {
+		if(UserInterface.mobile) return;
 		
 		if(typeof assetRoot !== 'undefined') {
-			this.assetRoot = assetRoot;
+			_assetRoot = assetRoot;
 		} else {
 			console.warn('Audio and video asset source undefined');
 			return;
 		}
 		
 		// Preload audio assets
-		for(var property in this.sounds) {			
-			var fileName = this.sounds[property];
-			this.sounds[property] = this.preloadAudio(this.assetRoot + '/audio/' + fileName);
+		for(var property in Module.sounds) {			
+			var fileName = Module.sounds[property];
+			Module.sounds[property] = _preloadAudio(_assetRoot + '/audio/' + fileName);
 		}
 		
 		// Preload video assets
-		for(var property in this.videos) {
-			var fileName = this.videos[property];
-			this.videos[property] = this.preloadVideo(this.assetRoot + '/video/' + fileName);
+		for(var property in Module.videos) {
+			var fileName = Module.videos[property];
+			Module.videos[property] = _preloadVideo(_assetRoot + '/video/' + fileName);
 		}
 		
 		// Bind keypress event listener
 		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
-			if(Interface.promptActive || !Sampler.videos.hasOwnProperty(key)) return;
+			if(UserInterface.promptActive || !Module.videos.hasOwnProperty(key)) return;
 			
 			WebSocket.broadcast('trigger', { key: key });
 					
 			// Using setTimeout to prevent overloading 
 			// of the call stack and crashing the app
-			setTimeout(Sampler.playAudio(key), 50);
-			setTimeout(Sampler.playVideo(key), 50);
+			setTimeout(Module.playAudio(key), 50);
+			setTimeout(Module.playVideo(key), 50);
 		});
-	}
-};
+	};
+	
+	return Module;
+})();

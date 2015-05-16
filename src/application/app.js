@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	Interface.init();
+	UserInterface.init();
 	
 	WebSocket.init('http://tomhumphris.com:8080');
 	

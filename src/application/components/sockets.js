@@ -32,10 +32,10 @@ var WebSocket = {
 		this.socket.emit('join', this.room);
 		
 		if($('#menu-leave').hasClass('disabled')) {
-			Interface.toggleMenuItem('#menu-leave');
+			UserInterface.toggleMenuItem('#menu-leave');
 		}
 		
-		Interface.showRoomId(this.room);
+		UserInterface.showRoomId(this.room);
 	},
 	
 	leaveRoom: function() {
@@ -43,10 +43,10 @@ var WebSocket = {
 		this.room = null;
 		
 		if(!$('#menu-leave').hasClass('disabled')) {
-			Interface.toggleMenuItem('#menu-leave');
+			UserInterface.toggleMenuItem('#menu-leave');
 		}
 		
-		Interface.hideRoomId();
+		UserInterface.hideRoomId();
 	},
 	
 	generateRoom: function() {
@@ -85,7 +85,7 @@ var WebSocket = {
 		this.socket.on('chat', function(data) {
 			var obj = JSON.parse(data);
 						
-			Interface.printChatMessage(obj.message);
+			UserInterface.printChatMessage(obj.message);
 		});
 	}
 };

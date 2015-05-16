@@ -1,4 +1,4 @@
-var Interface = {
+var UserInterface = {
 	mobile: false,
 	
 	chatEnabled: true,
