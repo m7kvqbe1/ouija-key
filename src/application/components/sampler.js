@@ -1,4 +1,4 @@
-var Sampler = (function() {
+var Sampler = (function(ui, sockets) {
 	var Module = {};
 	
 	var _assetRoot = null;		
@@ -224,4 +224,4 @@ var Sampler = (function() {
 	};
 	
 	return Module;
-})();
+})(UserInterface, WebSockets);
