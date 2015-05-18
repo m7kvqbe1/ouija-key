@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		uglify: {
 			options: {
-				banner: '/* Ouija v0.0.1, built <%=  grunt.template.today() %> */'
+				banner: '/* Ouija Key, built <%=  grunt.template.today() %> */'
 			},
 
 			lib: {
