@@ -50,8 +50,21 @@ var UserInterface = {
 		}
 	},
 	
-	showRoomId: function(roomid) {
-		$('#room-id > span').text(roomid);
+	showRoomId: function(roomid, err) {
+		if(err) {
+			$('#room-id').html('Room ID Invalid');
+			
+			setTimeout(function() {
+				if(WebSocket.room) {
+					$('#room-id').html('<strong>Current Room ID:</strong><br /><span>' + WebSocket.room + '</span>');
+				} else {
+					$('#room-id').html('');
+				}
+			}, 4000);
+		} else {
+			$('#room-id').html('<strong>Current Room ID:</strong><br /><span>' + roomid + '</span>');
+		}
+		
 		$('#room-id').removeClass('hidden');
 	},
 	
@@ -96,13 +109,16 @@ var UserInterface = {
 				break;
 			
 			case 'join':
-				var guid = $('#prompt input').val();
+				var uuid = $('#prompt input').val();
 				
-				if(guid === '') return;
+				if(!/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(uuid)) {
+					this.showRoomId(null, true);
+					return;	
+				}
 				
 				if(WebSocket.room) WebSocket.leaveRoom();
 				
-				WebSocket.joinRoom(guid);
+				WebSocket.joinRoom(uuid);
 				break;
 				
 			default:
