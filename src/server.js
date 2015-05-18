@@ -12,6 +12,16 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
+// Redirect to www
+app.all(/.*/, function(req, res, next) {
+  var host = req.header("host");
+  if (host.match(/^www\..*/i)) {
+    next();
+  } else {
+    res.redirect(301, "http://www." + host);
+  }
+});
+
 server.listen(8080);
 
 // WebSocket
