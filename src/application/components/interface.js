@@ -98,6 +98,8 @@ var UserInterface = {
 			case 'join':
 				var guid = $('#prompt input').val();
 				
+				if(guid === '') return;
+				
 				if(WebSocket.room) WebSocket.leaveRoom();
 				
 				WebSocket.joinRoom(guid);
