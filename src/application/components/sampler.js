@@ -1,8 +1,9 @@
-var Sampler = (function(ui, sockets) {
+var Sampler = (function(ui, socket) {
 	var Module = {};
 	
-	var _assetRoot = null;		
-	var _assetCount = 99;	
+	var _assetRoot = '';
+	
+	var _assetCount = 104;	
 	var _assetsLoaded = 0;
 	
 	var _preloadComplete = false;
@@ -113,11 +114,11 @@ var Sampler = (function(ui, sockets) {
 		L: "45.webm",
 		Z: "46.webm",
 		X: "47.webm",
-		//C: "48.webm",
-		//V: "49.webm",
-		//B: "50.webm",
-		//N: "51.webm",
-		//M: "52.webm"
+		C: "48.webm",
+		V: "49.webm",
+		B: "50.webm",
+		N: "51.webm",
+		M: "52.webm"
 	};
 
 	var _loadCheck = function(uri) {
@@ -224,4 +225,4 @@ var Sampler = (function(ui, sockets) {
 	};
 	
 	return Module;
-})(UserInterface, WebSockets);
+})(UserInterface, WebSocket);
