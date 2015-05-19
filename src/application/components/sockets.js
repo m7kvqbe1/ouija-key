@@ -1,78 +1,81 @@
-var WebSocket = {
-	host: '',
+var WebSocket = (function() {
+	var exports = {};
 	
-	socket: null,
-	room: null,
+	var host = '';
 	
-	generateUuid: function() {
+	var socket = null;
+	
+	exports.room = null;
+	
+	var _generateUuid = function() {
 		function s4() {
 			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 		}
 	  
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-	},
+	};
+	
+	exports.generateRoom = function() {
+		// Leave current room
+		if(exports.room) exports.leaveRoom();
+		
+		// Generate hash for room ID and join room
+		exports.room = _generateUuid();
+		exports.joinRoom(exports.room);
+		
+		return exports.room;
+	};
 
-	broadcast: function(eventType, payload) {
-		if(this.room) {
-			payload.room = this.room;	
+	exports.broadcast = function(eventType, payload) {
+		if(exports.room) {
+			payload.room = exports.room;	
 		}
 		
 		payload = JSON.stringify(payload);
 		
-		this.socket.emit(eventType, payload);
-	},
+		socket.emit(eventType, payload);
+	};
 	
-	joinRoom: function(room) {
+	exports.joinRoom = function(room) {
 		if(typeof room === 'undefined') {
 			console.warn('Please specify a room to join');
 			return;
 		}
 		
-		this.room = room;
-		this.socket.emit('join', this.room);
+		exports.room = room;
+		socket.emit('join', room);
 		
 		if($('#menu-leave').hasClass('disabled')) {
 			UserInterface.toggleMenuItem('#menu-leave');
 		}
 		
-		UserInterface.showRoomId(this.room);
-	},
+		UserInterface.showRoomId(room);
+	};
 	
-	leaveRoom: function() {
-		this.socket.emit('leave', this.room);
-		this.room = null;
+	exports.leaveRoom = function() {
+		socket.emit('leave', exports.room);
+		exports.room = null;
 		
 		if(!$('#menu-leave').hasClass('disabled')) {
 			UserInterface.toggleMenuItem('#menu-leave');
 		}
 		
 		UserInterface.hideRoomId();
-	},
+	};
 	
-	generateRoom: function() {
-		// Leave current room
-		if(this.room) this.leaveRoom();
-		
-		// Generate hash for room ID and join room
-		this.room = this.generateUuid();
-		this.joinRoom(this.room);
-		
-		return this.room;
-	},
-	
-	init: function(uri) {
+	exports.init = function(uri) {
 		if(typeof uri === 'undefined') {
 			console.warn('No URI provided for server');
 			return;
 		}
 		
-		this.host = uri;
+		host = uri;
 		
 		// Create socket
-		this.socket = io.connect(this.host);
+		socket = io.connect(host);
 		
 		// Trigger samples from socket event
-		this.socket.on('trigger', function(data) {
+		socket.on('trigger', function(data) {
 			var obj = JSON.parse(data);
 			
 			// Using setTimeout to prevent overloading
@@ -82,10 +85,12 @@ var WebSocket = {
 		});
 		
 		// Display chat message from socket event
-		this.socket.on('chat', function(data) {
+		socket.on('chat', function(data) {
 			var obj = JSON.parse(data);
 						
 			UserInterface.printChatMessage(obj.message);
 		});
-	}
-};
+	};
+	
+	return exports;
+})();

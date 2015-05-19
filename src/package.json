@@ -1,6 +1,6 @@
 {
   "name": "ouija",
-  "version": "0.0.1",
+  "version": "v0.1.0",
   "description": "Ouija Multimedia Web Sampler",
   "main": "server.js",
   "scripts": {
