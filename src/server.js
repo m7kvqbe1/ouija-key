@@ -12,7 +12,7 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-// Redirect to www
+// 301 redirect all requests to www
 app.all(/.*/, function(req, res, next) {
   var host = req.header("host");
   if (host.match(/^www\..*/i)) {
