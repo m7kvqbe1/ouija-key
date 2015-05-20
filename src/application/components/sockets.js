@@ -1,11 +1,9 @@
-var WebSocket = (function() {
-	var exports = {};
+var WebSocket = (function() {	
+	var _host = '';
 	
-	var host = '';
+	var _socket = null;
 	
-	var socket = null;
-	
-	exports.room = null;
+	var room = null;
 	
 	var _generateUuid = function() {
 		function s4() {
@@ -15,35 +13,14 @@ var WebSocket = (function() {
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	};
 	
-	exports.generateRoom = function() {
-		// Leave current room
-		if(exports.room) exports.leaveRoom();
-		
-		// Generate hash for room ID and join room
-		exports.room = _generateUuid();
-		exports.joinRoom(exports.room);
-		
-		return exports.room;
-	};
-
-	exports.broadcast = function(eventType, payload) {
-		if(exports.room) {
-			payload.room = exports.room;	
-		}
-		
-		payload = JSON.stringify(payload);
-		
-		socket.emit(eventType, payload);
-	};
-	
-	exports.joinRoom = function(room) {
+	var joinRoom = function(room) {
 		if(typeof room === 'undefined') {
 			console.warn('Please specify a room to join');
 			return;
 		}
 		
-		exports.room = room;
-		socket.emit('join', room);
+		room = room;
+		_socket.emit('join', room);
 		
 		if($('#menu-leave').hasClass('disabled')) {
 			UserInterface.toggleMenuItem('#menu-leave');
@@ -52,9 +29,9 @@ var WebSocket = (function() {
 		UserInterface.showRoomId(room);
 	};
 	
-	exports.leaveRoom = function() {
-		socket.emit('leave', exports.room);
-		exports.room = null;
+	var leaveRoom = function() {
+		_socket.emit('leave', room);
+		room = null;
 		
 		if(!$('#menu-leave').hasClass('disabled')) {
 			UserInterface.toggleMenuItem('#menu-leave');
@@ -63,19 +40,40 @@ var WebSocket = (function() {
 		UserInterface.hideRoomId();
 	};
 	
-	exports.init = function(uri) {
+	var generateRoom = function() {
+		// Leave current room
+		if(room) leaveRoom();
+		
+		// Generate hash for room ID and join room
+		room = _generateUuid();
+		joinRoom(room);
+		
+		return room;
+	};
+
+	var broadcast = function(eventType, payload) {
+		if(room) {
+			payload.room = room;	
+		}
+		
+		payload = JSON.stringify(payload);
+		
+		_socket.emit(eventType, payload);
+	};
+	
+	var init = function(uri) {
 		if(typeof uri === 'undefined') {
 			console.warn('No URI provided for server');
 			return;
 		}
 		
-		host = uri;
+		_host = uri;
 		
-		// Create socket
-		socket = io.connect(host);
+		// Create _socket
+		_socket = io.connect(_host);
 		
-		// Trigger samples from socket event
-		socket.on('trigger', function(data) {
+		// Trigger samples from _socket event
+		_socket.on('trigger', function(data) {
 			var obj = JSON.parse(data);
 			
 			// Using setTimeout to prevent overloading
@@ -84,13 +82,19 @@ var WebSocket = (function() {
 			setTimeout(Sampler.playVideo(obj.key), 50);
 		});
 		
-		// Display chat message from socket event
-		socket.on('chat', function(data) {
+		// Display chat message from _socket event
+		_socket.on('chat', function(data) {
 			var obj = JSON.parse(data);
 						
 			UserInterface.printChatMessage(obj.message);
 		});
 	};
 	
-	return exports;
+	return {
+		init: init,
+		joinRoom: joinRoom,
+		leaveRoom: leaveRoom,
+		generateRoom: generateRoom,
+		broadcast: broadcast
+	};
 })();
