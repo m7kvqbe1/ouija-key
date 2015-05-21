@@ -136,6 +136,7 @@ var UserInterface = function() {
 		}		
 	};
 
+	// Constructor
 	var init = (function() {		
 		browserCheck();
 		
@@ -205,6 +206,7 @@ var UserInterface = function() {
 		})();
 	})();
 	
+	// Return public methods and properties
 	return {
 		mobile: mobile,
 		chatEnabled: chatEnabled,
