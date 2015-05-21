@@ -1,4 +1,4 @@
-var WebSocket = (function() {	
+var WebSocket = function(uri) {
 	var _host = '';
 	
 	var _socket = null;
@@ -13,20 +13,20 @@ var WebSocket = (function() {
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	};
 	
-	var joinRoom = function(room) {
-		if(typeof room === 'undefined') {
+	var joinRoom = function(roomId) {
+		if(typeof roomId === 'undefined') {
 			console.warn('Please specify a room to join');
 			return;
 		}
 		
-		room = room;
+		room = roomId;
 		_socket.emit('join', room);
 		
 		if($('#menu-leave').hasClass('disabled')) {
-			UserInterface.toggleMenuItem('#menu-leave');
+			app.userInterface.toggleMenuItem('#menu-leave');
 		}
 		
-		UserInterface.showRoomId(room);
+		app.userInterface.showRoomId(room);
 	};
 	
 	var leaveRoom = function() {
@@ -34,10 +34,10 @@ var WebSocket = (function() {
 		room = null;
 		
 		if(!$('#menu-leave').hasClass('disabled')) {
-			UserInterface.toggleMenuItem('#menu-leave');
+			app.userInterface.toggleMenuItem('#menu-leave');
 		}
 		
-		UserInterface.hideRoomId();
+		app.userInterface.hideRoomId();
 	};
 	
 	var generateRoom = function() {
@@ -60,8 +60,8 @@ var WebSocket = (function() {
 		
 		_socket.emit(eventType, payload);
 	};
-	
-	var init = function(uri) {
+		
+	var init = (function() {
 		if(typeof uri === 'undefined') {
 			console.warn('No URI provided for server');
 			return;
@@ -69,32 +69,32 @@ var WebSocket = (function() {
 		
 		_host = uri;
 		
-		// Create _socket
+		// Create socket
 		_socket = io.connect(_host);
 		
-		// Trigger samples from _socket event
+		// Trigger samples from socket event
 		_socket.on('trigger', function(data) {
 			var obj = JSON.parse(data);
 			
 			// Using setTimeout to prevent overloading
 			// of the call stack and crashing the app
-			setTimeout(Sampler.playAudio(obj.key), 50);
-			setTimeout(Sampler.playVideo(obj.key), 50);
+			setTimeout(app.sampler.playAudio(obj.key), 50);
+			setTimeout(app.sampler.playVideo(obj.key), 50);
 		});
 		
-		// Display chat message from _socket event
+		// Display chat message from socket event
 		_socket.on('chat', function(data) {
 			var obj = JSON.parse(data);
 						
-			UserInterface.printChatMessage(obj.message);
+			app.userInterface.printChatMessage(obj.message);
 		});
-	};
+	})();
 	
 	return {
-		init: init,
+		room: room,
 		joinRoom: joinRoom,
 		leaveRoom: leaveRoom,
 		generateRoom: generateRoom,
-		broadcast: broadcast
+		broadcast: broadcast	
 	};
-})();
+};

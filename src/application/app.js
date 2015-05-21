@@ -1,7 +1,9 @@
+var app = {};
+
 $(document).ready(function() {
-	UserInterface.init();
+	app.userInterface = new UserInterface();
 	
-	WebSocket.init('http://tomhumphris.com:8080');
+	app.webSocket = new WebSocket('http://tomhumphris.com:8080');
 	
-	Sampler.init('/public');
+	app.sampler = new Sampler('/public');
 });

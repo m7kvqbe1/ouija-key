@@ -1,62 +1,62 @@
-var UserInterface = {
-	mobile: false,
+var UserInterface = function() {
+	var mobile = false;
 	
-	chatEnabled: true,
+	var chatEnabled = true;
 	
-	menuActive: false,
+	var menuActive = false;
 
-	promptActive: false,
+	var promptActive = false;
 	
-	toggleMenuDisplay: function() {
-		if(this.promptActive) {
-			this.closePrompt();
+	var toggleMenuDisplay = function() {
+		if(promptActive) {
+			closePrompt();
 		}
 		
 		$('#nav-toggle').toggleClass('active');
 		$('.menu').toggleClass('hidden');
 				
-		this.menuActive = (this.menuActive) ? false : true;
-	},
+		menuActive = (menuActive) ? false : true;
+	};
 	
-	toggleMenuItem: function(selector) {
+	var toggleMenuItem = function(selector) {
 		$(selector).toggleClass('disabled');
-	},
+	};
 	
-	toggleChat: function() {
+	var toggleChat = function() {
 		$('.chat-messages').toggleClass('hidden');
 		$('#menu-toggle-chat').toggleClass('disabled');
 		
-		var text = (this.chatEnabled) ? 'Disabled' : 'Enabled';
+		var text = (chatEnabled) ? 'Disabled' : 'Enabled';
 		$('.chat-toggle-text').text(text);
 		
-		this.chatEnabled = (this.chatEnabled) ? false : true;
-	},
+		chatEnabled = (chatEnabled) ? false : true;
+	};
 	
-	clearChat: function() {
+	var clearChat = function() {
 		$('.chat-messages').html('');
-	},
+	};
 	
-	hideChatMessage: function() {
+	var hideChatMessage = function() {
 		$('.chat-messages :last-child').remove();
-	},
+	};
 	
-	printChatMessage: function(message) {		
+	var printChatMessage = function(message) {		
 		if(typeof message !== 'undefined' && message !== '') {			
 			$('.chat-messages').prepend('<span class="message">' + message + '</span>');
 			
 			if($('.chat-messages span').length > 5) {
-				this.hideChatMessage();
+				hideChatMessage();
 			}
 		}
-	},
+	};
 	
-	showRoomId: function(roomid, err) {
+	var showRoomId = function(roomid, err) {
 		if(err) {
 			$('#room-id').html('Room ID Invalid');
 			
 			setTimeout(function() {
-				if(WebSocket.room) {
-					$('#room-id').html('<strong>Current Room ID:</strong><br /><span>' + WebSocket.room + '</span>');
+				if(app.webSocket.room) {
+					$('#room-id').html('<strong>Current Room ID:</strong><br /><span>' + app.webSocket.room + '</span>');
 				} else {
 					$('#room-id').html('');
 				}
@@ -66,19 +66,19 @@ var UserInterface = {
 		}
 		
 		$('#room-id').removeClass('hidden');
-	},
+	};
 	
-	hideRoomId: function() {
+	var hideRoomId = function() {
 		$('#room-id').addClass('hidden');
-	},
+	};
 	
-	printDebug: function(message) {
+	var printDebug = function(message) {
 		$('#debug').text(message);
 		$('#debug').removeClass('hidden');
 		
-	},
+	};
 	
-	openPrompt: function(message, type) {
+	var openPrompt = function(message, type) {
 		$('#prompt input').attr('placeholder', message);
 		$('#prompt input').val('');
 		$('.version, .shortcuts').addClass('hidden');
@@ -86,64 +86,62 @@ var UserInterface = {
 		$('#prompt').attr('data-type', type);
 		document.querySelector('#prompt input').focus();
 		
-		this.promptActive = true;
-	},
+		promptActive = true;
+	};
 	
-	closePrompt: function() {
+	var closePrompt = function() {
 		$('#prompt').addClass('hidden');
 		$('.version, .shortcuts').removeClass('hidden');
 		
-		this.promptActive = false;
-	},
+		promptActive = false;
+	};
 	
-	promptAction: function() {
+	var promptAction = function() {
 		var type = $('#prompt').attr('data-type');
 		
 		switch(type) {
 			case 'chat':
 				var message = $('#prompt input').val();
 				
-				WebSocket.broadcast('chat', { message: message });
+				app.webSocket.broadcast('chat', { message: message });
 				
-				this.printChatMessage(message);
+				printChatMessage(message);
 				break;
 			
 			case 'join':
 				var uuid = $('#prompt input').val();
 				
 				if(!/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(uuid)) {
-					this.showRoomId(null, true);
+					showRoomId(null, true);
 					return;	
 				}
 				
-				if(WebSocket.room) WebSocket.leaveRoom();
+				if(app.webSocket.room) app.webSocket.leaveRoom();
 				
-				WebSocket.joinRoom(uuid);
+				app.webSocket.joinRoom(uuid);
 				break;
 				
 			default:
 				break;
 		}
 		
-		this.closePrompt();
-	},
+		closePrompt();
+	};
 	
-	browserCheck: function() {
+	var browserCheck = function() {
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-			this.mobile = true;
+			mobile = true;
 			$('video, .chat-messages').addClass('hidden');
 			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon using a laptop or desktop computer.</span>');
 		}		
-	},
+	};
 
-	init: function() {
-		_this = this;
-		
-		this.browserCheck();
+	var init = (function() {		
+		browserCheck();
 		
 		// Bind open / close menu button event listener
 		$('#nav-toggle').on('click', function() {
-			_this.toggleMenuDisplay();
+			toggleMenuDisplay();
 		});
 		
 		// Bind keyboard shortcuts event listener
@@ -151,19 +149,19 @@ var UserInterface = {
 			switch(e.keyCode) {
 				// Return key
 				case 13:
-					if(_this.promptActive) {
-						_this.promptAction();
-					} else if(!_this.menuActive && _this.chatEnabled) {
-						_this.openPrompt('Enter your message', 'chat');
+					if(promptActive) {
+						promptAction();
+					} else if(!menuActive && chatEnabled) {
+						openPrompt('Enter your message', 'chat');
 					}
 					return;
 				
 				// Escape key
 				case 27:				
-					if(_this.promptActive) {
-						_this.closePrompt()
+					if(promptActive) {
+						closePrompt()
 					} else {
-						_this.toggleMenuDisplay();
+						toggleMenuDisplay();
 					}
 					return;
 				
@@ -174,36 +172,56 @@ var UserInterface = {
 		
 		// Bind toggle chat event listener
 		$('#menu-toggle-chat').on('click', function() {
-			_this.toggleChat();
+			toggleChat();
 		});
 		
 		// Bind create new room event listener
 		$('#menu-new').on('click', function() {
-			WebSocket.generateRoom();
+			app.webSocket.generateRoom();
 		});
 		
 		// Bind leave current room event listener
 		$('#menu-leave').on('click', function() {
-			WebSocket.leaveRoom();
+			app.webSocket.leaveRoom();
 		});
 		
 		// Join room click event listener
 		$('#menu-join').on('click', function() {
 			// Open dialogue box to enter room GUID
-			_this.openPrompt('Enter room ID', 'join');
+			openPrompt('Enter room ID', 'join');
 		});
 		
 		// Close prompt
 		$('#prompt .icon-close').on('click', function() {
-			_this.closePrompt();
+			closePrompt();
 		});
 		
 		// Clean out a message from the chat window every 40 seconds
 		(function cleanChat() {
 			setTimeout(function() {
-				_this.hideChatMessage();
+				hideChatMessage();
 				cleanChat();
 			}, 40000);	
 		})();
-	}
+	})();
+	
+	return {
+		mobile: mobile,
+		chatEnabled: chatEnabled,
+		menuActive: menuActive,
+		promptActive: promptActive,
+		toggleMenuDisplay: toggleMenuDisplay,
+		toggleMenuItem: toggleMenuItem,
+		toggleChat: toggleChat,
+		clearChat: clearChat,
+		hideChatMessage: hideChatMessage,
+		printChatMessage: printChatMessage,
+		showRoomId: showRoomId,
+		hideRoomId: hideRoomId,
+		printDebug: printDebug,
+		openPrompt: openPrompt,
+		closePrompt: closePrompt,
+		promptAction: promptAction,
+		browserCheck: browserCheck
+	};
 };

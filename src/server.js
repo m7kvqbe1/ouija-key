@@ -14,12 +14,12 @@ app.get('/', function(req, res) {
 
 // 301 redirect all requests to www
 app.all(/.*/, function(req, res, next) {
-  var host = req.header("host");
-  if (host.match(/^www\..*/i)) {
-    next();
-  } else {
-    res.redirect(301, "http://www." + host);
-  }
+	var host = req.header("host");
+	if(host.match(/^www\..*/i)) {
+		next();
+	} else {
+		res.redirect(301, "http://www." + host);
+	}
 });
 
 server.listen(8080);

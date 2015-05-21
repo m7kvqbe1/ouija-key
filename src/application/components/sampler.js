@@ -1,4 +1,4 @@
-var Sampler = (function(ui, socket) {	
+var Sampler = function(assetRoot) {	
 	var _assetRoot = '';
 	
 	var _assetCount = 104;	
@@ -122,7 +122,7 @@ var Sampler = (function(ui, socket) {
 	var _loadCheck = function(uri) {
 		_assetsLoaded++;
 		
-		UserInterface.printDebug('Loading: ' + uri);
+		app.userInterface.printDebug('Loading: ' + uri);
 		
 		if(_assetsLoaded === _assetCount) {
 			_preloadComplete = true;
@@ -130,7 +130,7 @@ var Sampler = (function(ui, socket) {
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 			
-			if(!UserInterface.mobile) UserInterface.toggleMenuDisplay();
+			if(!app.userInterface.mobile) app.userInterface.toggleMenuDisplay();
 		}
 	}
 	
@@ -185,8 +185,8 @@ var Sampler = (function(ui, socket) {
 		_backgroundVideoOverlayElement.pause();
 	};
 	
-	var init = function(assetRoot) {
-		if(UserInterface.mobile) return;
+	var init = (function() {
+		if(app.userInterface.mobile) return;
 		
 		if(typeof assetRoot !== 'undefined') {
 			_assetRoot = assetRoot;
@@ -211,23 +211,22 @@ var Sampler = (function(ui, socket) {
 		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
-			if(UserInterface.promptActive || !videos.hasOwnProperty(key)) return;
+			if(app.userInterface.promptActive || !videos.hasOwnProperty(key)) return;
 			
-			WebSocket.broadcast('trigger', { key: key });
+			app.webSocket.broadcast('trigger', { key: key });
 					
 			// Using setTimeout to prevent overloading 
 			// of the call stack and crashing the app
 			setTimeout(playAudio(key), 50);
 			setTimeout(playVideo(key), 50);
 		});
-	};
+	})();
 	
 	return {
-		init: init,
 		pauseVideo: pauseVideo,
 		playVideo: playVideo,
 		playAudio: playAudio,
 		videos: videos,
 		sounds: sounds
 	};
-})(UserInterface, WebSocket);
+};
