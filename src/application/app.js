@@ -1,4 +1,4 @@
-var app = {};
+var app = app || {};
 
 $(document).ready(function() {
 	app.userInterface = new UserInterface();
