@@ -136,7 +136,6 @@ var UserInterface = function() {
 		}		
 	};
 
-	// Constructor
 	var init = (function() {		
 		browserCheck();
 		

@@ -185,7 +185,6 @@ var Sampler = function(assetRoot) {
 		_backgroundVideoOverlayElement.pause();
 	};
 	
-	// Constructor
 	var init = (function() {
 		if(app.userInterface.mobile) return;
 		
@@ -222,7 +221,6 @@ var Sampler = function(assetRoot) {
 			setTimeout(playVideo(key), 50);
 		});
 	})();
-	
 	
 	// Return public methods and properties
 	return {

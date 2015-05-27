@@ -61,7 +61,6 @@ var WebSocket = function(uri) {
 		_socket.emit(eventType, payload);
 	};
 	
-	// Constructor
 	var init = (function() {
 		if(typeof uri === 'undefined') {
 			console.warn('No URI provided for server');
