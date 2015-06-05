@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
-		uglify: {
+		concat: {
 			options: {
 				banner: '/* Ouija Key, built <%=  grunt.template.today() %> */'
 			},
@@ -24,9 +24,9 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Load the plugin that prvides the "uglify" task.
-	grunt.loadNpmTasks('grunt-contrib-uglify');
+	// Load the plugin that prvides the "concat" task.
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	// Default task(s).
-	grunt.registerTask('default', ['uglify']);
+	grunt.registerTask('default', ['concat']);
 }
