@@ -78,8 +78,8 @@ var WebSocket = function(uri) {
 			
 			// Using setTimeout to prevent overloading
 			// of the call stack and crashing the app
-			setTimeout(app.sampler.playAudio(obj.key), 50);
-			setTimeout(app.sampler.playVideo(obj.key), 50);
+			setTimeout(app.sampler.playAudio(obj.key), 0);
+			setTimeout(app.sampler.playVideo(obj.key), 0);
 		});
 		
 		// Display chat message from socket event

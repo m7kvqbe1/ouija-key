@@ -217,8 +217,8 @@ var Sampler = function(assetRoot) {
 					
 			// Using setTimeout to prevent overloading 
 			// of the call stack and crashing the app
-			setTimeout(playAudio(key), 50);
-			setTimeout(playVideo(key), 50);
+			setTimeout(playAudio(key), 0);
+			setTimeout(playVideo(key), 0);
 		});
 	})();
 	
