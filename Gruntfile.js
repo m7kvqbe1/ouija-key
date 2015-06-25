@@ -7,9 +7,20 @@ module.exports = function(grunt) {
 				sourceMap: true,
 				separator: ';'
 			},
+			
+			lib: {
+				src: [
+					'./application/vendor/**/*.js'
+				],
+				
+				dest: './public/js/lib.js'
+			},
 
-			dist: {
-				src: ['./application/**/*.js', './application/*.js'],
+			app: {
+				src: [
+					'./application/*.js', 
+					'./application/**/*.js'
+				],
 				
 				dest: './public/js/app.js'
 			}
@@ -25,14 +36,15 @@ module.exports = function(grunt) {
 			
 			dist: {
 				files: {
-					'./public/js/app.min.js': ['<%= concat.dist.dest %>']
+					'./public/js/lib.min.js': ['<%= concat.lib.dest %>'],
+					'./public/js/app.min.js': ['<%= concat.app.dest %>']
 				}
 			}
 		},
 		
 		watch: {			
 			js: {
-				files: ['./application/**/*.js', './application/*.js'],
+				files: ['./application/**/**/*.js', './application/**/*.js', './application/*.js'],
 				tasks: ['concat', 'uglify']
 			}
 		}
