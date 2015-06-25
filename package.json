@@ -1,7 +1,7 @@
 {
-  "name": "ouija",
+  "name": "ouija-key",
   "version": "v0.1.0",
-  "description": "Ouija Multimedia Web Sampler",
+  "description": "Ouija Key Multimedia Web Sampler",
   "main": "server.js",
   "scripts": {
     "test": ""
