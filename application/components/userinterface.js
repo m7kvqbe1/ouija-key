@@ -1,4 +1,6 @@
 var UserInterface = function() {
+	"use strict";
+	
 	var mobile = false;
 	
 	var chatEnabled = true;

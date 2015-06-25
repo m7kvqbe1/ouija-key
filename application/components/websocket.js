@@ -1,4 +1,6 @@
 var WebSocket = function(uri) {
+	"use strict";
+	
 	var _host = '';
 	
 	var _socket = null;

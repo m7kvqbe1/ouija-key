@@ -4,7 +4,9 @@ $(document).ready(function() {
 	app.userInterface = new UserInterface();
 	app.webSocket = new WebSocket('http://tomhumphris.com:8080');
 	app.sampler = new Sampler('/public');
-});;var Sampler = function(assetRoot) {	
+});;var Sampler = function(assetRoot) {
+	"use strict";
+	
 	var _assetRoot = '';
 	
 	var _assetCount = 104;	
@@ -237,6 +239,8 @@ $(document).ready(function() {
 		sounds: sounds
 	};
 };;var UserInterface = function() {
+	"use strict";
+	
 	var mobile = false;
 	
 	var chatEnabled = true;
@@ -464,6 +468,8 @@ $(document).ready(function() {
 		browserCheck: browserCheck
 	};
 };;var WebSocket = function(uri) {
+	"use strict";
+	
 	var _host = '';
 	
 	var _socket = null;

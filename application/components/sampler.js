@@ -1,4 +1,6 @@
-var Sampler = function(assetRoot) {	
+var Sampler = function(assetRoot) {
+	"use strict";
+	
 	var _assetRoot = '';
 	
 	var _assetCount = 104;	
