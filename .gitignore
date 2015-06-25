@@ -1,3 +1,2 @@
-/src/node_modules/.bin
-/src/public/js
+/node_modules
 .DS_Store
