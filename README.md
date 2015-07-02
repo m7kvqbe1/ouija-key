@@ -1,2 +1,2 @@
 # Ouija Key
-Audio Visual Web Sampler
+Make music with your friends. Ouija Key is a multimedia web sampler.
