@@ -1,10 +1,31 @@
 var app = app || {};
 
-$(document).ready(function() {
+$(function() {
 	app.userInterface = new UserInterface();
 	app.webSocket = new WebSocket('http://tomhumphris.com:8080');
 	app.sampler = new Sampler('/public');
-});;var Sampler = function(assetRoot) {
+});;'use strict';
+
+var Events = (function() {	
+	var emit = function(eventName, paramObj) {
+		var event;
+		
+		if(typeof paramObj !== 'undefined') {
+			event = new CustomEvent(eventName, paramObj);
+		} else {
+			event = new Event(eventName);
+		}
+		
+		document.dispatchEvent(event);
+	};
+	
+	// Return public methods and properties
+	return {
+		emit: emit
+	};
+})();
+
+module.exports = Events;;var Sampler = function(assetRoot) {
 	"use strict";
 	
 	var _assetRoot = '';
@@ -242,11 +263,8 @@ $(document).ready(function() {
 	"use strict";
 	
 	var mobile = false;
-	
 	var chatEnabled = true;
-	
 	var menuActive = false;
-
 	var promptActive = false;
 	
 	var toggleMenuDisplay = function() {
@@ -374,7 +392,10 @@ $(document).ready(function() {
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			mobile = true;
 			$('video, .chat-messages').addClass('hidden');
-			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon using a laptop or desktop computer.</span>');
+			$('.loading .inner').html(
+				'<span>Sorry, Ouija Key is intended to be used with a keyboard. ' + 
+				'Please come back soon using a laptop or desktop computer.</span>'
+			);
 		}		
 	};
 
@@ -471,9 +492,7 @@ $(document).ready(function() {
 	"use strict";
 	
 	var _host = '';
-	
 	var _socket = null;
-	
 	var room = null;
 	
 	var _generateUuid = function() {
