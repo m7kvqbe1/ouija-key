@@ -2,9 +2,7 @@ var WebSocket = function(uri) {
 	"use strict";
 	
 	var _host = '';
-	
 	var _socket = null;
-	
 	var room = null;
 	
 	var _generateUuid = function() {

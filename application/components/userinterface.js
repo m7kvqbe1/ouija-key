@@ -2,11 +2,8 @@ var UserInterface = function() {
 	"use strict";
 	
 	var mobile = false;
-	
 	var chatEnabled = true;
-	
 	var menuActive = false;
-
 	var promptActive = false;
 	
 	var toggleMenuDisplay = function() {
@@ -134,7 +131,10 @@ var UserInterface = function() {
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			mobile = true;
 			$('video, .chat-messages').addClass('hidden');
-			$('.loading .inner').html('<span>Sorry, Ouija Key is intended to be used with a keyboard. Please come back soon using a laptop or desktop computer.</span>');
+			$('.loading .inner').html(
+				'<span>Sorry, Ouija Key is intended to be used with a keyboard. ' + 
+				'Please come back soon using a laptop or desktop computer.</span>'
+			);
 		}		
 	};
 
