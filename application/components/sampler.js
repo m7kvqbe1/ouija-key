@@ -1,6 +1,6 @@
+'use strict';
+
 var Sampler = function(assetRoot) {
-	"use strict";
-	
 	var _assetRoot = '';
 	
 	var _assetCount = 104;	
@@ -233,3 +233,5 @@ var Sampler = function(assetRoot) {
 		sounds: sounds
 	};
 };
+
+module.exports = Sampler;
