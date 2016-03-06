@@ -1,6 +1,6 @@
 'use strict';
 
-var UserInterface = function() {
+var UserInterface = (function() {
 	var mobile = false;
 	var chatEnabled = true;
 	var menuActive = false;
@@ -227,6 +227,6 @@ var UserInterface = function() {
 		promptAction: promptAction,
 		browserCheck: browserCheck
 	};
-};
+})();
 
 module.exports = UserInterface;
