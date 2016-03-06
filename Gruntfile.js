@@ -14,14 +14,15 @@ module.exports = function(grunt) {
 				],
 				
 				dest: './public/js/lib.js'
-			},
+			}
+		},
 
-			app: {
+		browserify: {
+			dist: {
 				src: [
-					'./application/*.js', 
-					'./application/**/*.js'
+					'./application/*.js'
 				],
-				
+
 				dest: './public/js/app.js'
 			}
 		},
@@ -37,7 +38,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'./public/js/lib.min.js': ['<%= concat.lib.dest %>'],
-					'./public/js/app.min.js': ['<%= concat.app.dest %>']
+					'./public/js/app.min.js': ['<%= browserify.dist.dest %>']
 				}
 			}
 		},
@@ -45,16 +46,17 @@ module.exports = function(grunt) {
 		watch: {			
 			js: {
 				files: ['./application/**/**/*.js', './application/**/*.js', './application/*.js'],
-				tasks: ['concat', 'uglify']
+				tasks: ['concat', 'browserify', 'uglify']
 			}
 		}
 	});
 
 	// Load the plugins that prvide the various Grunt tasks
+	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// Default task(s).
-	grunt.registerTask('default', ['concat', 'uglify']);
+	grunt.registerTask('default', ['concat', 'browserify', 'uglify']);
 }

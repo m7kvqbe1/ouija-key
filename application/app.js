@@ -1,10 +1,8 @@
 'use strict';
 
-var app = app || {};
+window.app = window.app || {};
 
-require('./components/userinterface');
-var socket = require('./components/websocket');
-var sampler = require('./components/sampler');
-
-app.socket = new socket('http://tomhumphris.com:8080');
-app.sampler = new sampler('/public');
+// Globally exposed modules
+window.app.ui = require('./components/userinterface')();
+window.app.socket = require('./components/websocket')('http://tomhumphris.com:8080');
+window.app.sampler = require('./components/sampler')('/public');

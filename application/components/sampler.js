@@ -124,7 +124,7 @@ var Sampler = function(assetRoot) {
 	var _loadCheck = function(uri) {
 		_assetsLoaded++;
 		
-		app.userInterface.printDebug('Loading: ' + uri);
+		app.ui.printDebug('Loading: ' + uri);
 		
 		if(_assetsLoaded === _assetCount) {
 			_preloadComplete = true;
@@ -132,7 +132,7 @@ var Sampler = function(assetRoot) {
 			$('.loading, #debug').addClass('hidden');
 			$('#nav-toggle').addClass('show');
 			
-			if(!app.userInterface.mobile) app.userInterface.toggleMenuDisplay();
+			if(!app.ui.mobile) app.ui.toggleMenuDisplay();
 		}
 	}
 	
@@ -188,7 +188,7 @@ var Sampler = function(assetRoot) {
 	};
 	
 	var init = (function() {
-		if(app.userInterface.mobile) return;
+		if(app.ui.mobile) return;
 		
 		if(typeof assetRoot !== 'undefined') {
 			_assetRoot = assetRoot;
@@ -213,7 +213,7 @@ var Sampler = function(assetRoot) {
 		$(document).on('keypress', function(e) {
 			var key = String.fromCharCode(e.which);
 			
-			if(app.userInterface.promptActive || !videos.hasOwnProperty(key)) return;
+			if(app.ui.promptActive || !videos.hasOwnProperty(key)) return;
 			
 			app.webSocket.broadcast('trigger', { key: key });
 					

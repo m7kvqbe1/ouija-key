@@ -54,8 +54,8 @@ var UserInterface = function() {
 			$('#room-id').html('Room ID Invalid');
 			
 			setTimeout(function() {
-				if(app.webSocket.room) {
-					$('#room-id').html('<strong>Current Room ID:</strong><br /><span>' + app.webSocket.room + '</span>');
+				if(app.socket.room) {
+					$('#room-id').html('<strong>Current Room ID:</strong><br /><span>' + app.socket.room + '</span>');
 				} else {
 					$('#room-id').html('');
 				}
@@ -102,7 +102,7 @@ var UserInterface = function() {
 			case 'chat':
 				var message = $('#prompt input').val();
 				
-				app.webSocket.broadcast('chat', { message: message });
+				app.socket.broadcast('chat', { message: message });
 				
 				printChatMessage(message);
 				break;
@@ -115,9 +115,9 @@ var UserInterface = function() {
 					return;	
 				}
 				
-				if(app.webSocket.room) app.webSocket.leaveRoom();
+				if(app.socket.room) app.socket.leaveRoom();
 				
-				app.webSocket.joinRoom(uuid);
+				app.socket.joinRoom(uuid);
 				break;
 				
 			default:
@@ -179,12 +179,12 @@ var UserInterface = function() {
 		
 		// Bind create new room event listener
 		$('#menu-new').on('click', function() {
-			app.webSocket.generateRoom();
+			app.socket.generateRoom();
 		});
 		
 		// Bind leave current room event listener
 		$('#menu-leave').on('click', function() {
-			app.webSocket.leaveRoom();
+			app.socket.leaveRoom();
 		});
 		
 		// Join room click event listener
