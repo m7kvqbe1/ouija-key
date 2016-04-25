@@ -215,7 +215,7 @@ var Sampler = function(assetRoot) {
 			
 			if(app.ui.promptActive || !videos.hasOwnProperty(key)) return;
 			
-			app.webSocket.broadcast('trigger', { key: key });
+			app.socket.broadcast('trigger', { key: key });
 					
 			// Using setTimeout to prevent overloading 
 			// of the call stack and crashing the app
